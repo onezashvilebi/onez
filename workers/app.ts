@@ -22,6 +22,8 @@ export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
 
+    if (url.pathname !== '/' && !url.pathname.includes('.') && !url.pathname.endsWith('/')) {
+  return Response.redirect(`${url.origin}${url.pathname}/${url.search}`, 301);
     if (url.pathname === "/api/lead") return handleLead(request, env);
     if (url.pathname.startsWith("/api/chat/")) return handleChat(request, env, ctx);
     if (url.pathname.startsWith("/api/admin/")) return handleAdmin(request, env);
