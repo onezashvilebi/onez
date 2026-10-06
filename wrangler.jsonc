@@ -1,0 +1,35 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "onez",
+  "compatibility_date": "2026-09-08",
+  "main": "./workers/app.ts",
+  // Поддомен *.workers.dev выключен: он отдавал тот же сайт третьим адресом —
+  // ещё один дубль для поиска (ONEZ-57). Сайт живёт на onez.ge.
+  "workers_dev": false,
+  "assets": {
+    // /ru/uslugi отдаёт ru/uslugi/index.html без редиректа на слеш — адреса как на старом сайте.
+    "html_handling": "drop-trailing-slash",
+    // Статика выигрывает; всё остальное (404) доходит до Worker.
+    "not_found_handling": "none",
+    // Старые адреса *.html сначала идут в Worker: он отдаёт 301 на чистый адрес.
+    // Без этого раздача статики отвечает на них 307 раньше Worker.
+    // /api/lead — приём заявки в Telegram (workers/lead.ts).
+    // /ru/ и /en/ — тоже в Worker: он отвечает 301 на /ru и /en (раздача статики дала бы 307).
+    // Цикла нет: /ru уже отдаётся статикой из ru/index.html. Не через public/_redirects —
+    // правило там подменяло пререндер главных RU/EN заглушкой (ONEZ-46).
+    "run_worker_first": ["/*.html", "/api/*", "/ru/", "/en/"]
+  },
+  "observability": { "enabled": true },
+  // Онлайн-чат (workers/chat.ts): переписка — в Durable Object, ответы ассистента — Workers AI.
+  "durable_objects": { "bindings": [{ "name": "CHAT", "class_name": "ChatStore" }] },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["ChatStore"] }],
+  "ai": { "binding": "AI" },
+  // Секреты (wrangler secret put): ADMIN_PASSWORD — вход в кабинет /admin;
+  // TELEGRAM_BOT_TOKEN; TELEGRAM_ADMIN_CHAT_ID — группа,
+  // куда идут и заявки, и сводки чата. TELEGRAM_CHAT_GROUP_ID — прежнее имя того же
+  // секрета, чат берёт его, только если ADMIN не задан.
+  // http → https делает Always Use HTTPS в зоне. www ведёт на тот же Worker;
+  // редирект на апекс — в workers/app.ts, но статика отдаётся раньше Worker,
+  // поэтому дубль снимает Redirect Rule зоны (docs/DEPLOY.md).
+  "routes": [{ "pattern": "onez.ge", "custom_domain": true }, { "pattern": "www.onez.ge", "custom_domain": true }]
+}

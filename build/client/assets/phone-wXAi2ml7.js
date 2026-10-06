@@ -1,0 +1,1 @@
+var e=/^\+?[\d(][\d\s()-]{7,17}\d$/,t=/^@[A-Za-z0-9_]{4,32}$/,n=n=>{let r=n.trim();return t.test(r)||e.test(r)};export{n as t};
