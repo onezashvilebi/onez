@@ -1,0 +1,22 @@
+# Заголовки статики (ONEZ-23). Хешированные бандлы сборки не меняются — кэш на год;
+# фото в /assets/*.jpg и *.webp без хеша, поэтому им сутки.
+/assets/*.js
+  Cache-Control: public, max-age=31536000, immutable
+/assets/*.css
+  Cache-Control: public, max-age=31536000, immutable
+/assets/*.jpg
+  Cache-Control: public, max-age=86400
+# webp без хеша, но меняются редко (ONEZ-56): 30 дней. Заменяешь фото — меняй имя файла.
+/assets/*.webp
+  Cache-Control: public, max-age=2592000
+# Версия шрифта — в имени файла (manrope-v20-latin.woff2), поэтому кэш на год.
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+# llms.txt (docs/SEO.md): явная кодировка — в файле грузинский и русский.
+/llms.txt
+  Content-Type: text/plain; charset=utf-8
+/*
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin

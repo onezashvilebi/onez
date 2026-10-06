@@ -1,0 +1,317 @@
+@import "tailwindcss";
+
+/* Шрифты со своего домена (ONEZ-22): без запросов к Google Fonts и без блокирующего стиля.
+   Вариативные woff2 из web/public/fonts — один файл на набор символов (латиница, кириллица, грузинский).
+
+   Латинские файлы урезаны до символов, которые сайт реально рисует: ASCII плюс
+   типографика («», —, …, °, ², ×, €, ₾, №). Unbounded 51 → 30 КБ, Manrope
+   25 → 16 КБ; они грузятся на любой странице (цифры и бренд — латиница) и
+   раньше отнимали канал у картинки героя. Если в текстах появятся буквы с
+   диакритикой (é, ü), их нужно добавить в набор и пересобрать файл:
+
+     pyftsubset unbounded-v12-latin.woff2 --flavor=woff2 --layout-features='*' \
+       --unicodes="U+0020-007E,U+00A0,U+00AB,U+00BB,U+00B0,U+00B2,U+00B3,U+00D7,\
+       U+2010-2015,U+2018-201F,U+2026,U+2030,U+20AC,U+20BE,U+20BD,U+2116,U+2212"
+
+   Проверка «чего не хватает» — поиск символов вне набора по собранным страницам
+   build/client/**/*.html. */
+/* Manrope, cyrillic */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url(/fonts/manrope-v20-cyrillic.woff2) format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* Manrope, latin-ext */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url(/fonts/manrope-v20-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* Manrope, latin */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url(/fonts/manrope-v20-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* Noto Sans Georgian, georgian */
+@font-face {
+  font-family: 'Noto Sans Georgian';
+  font-style: normal;
+  font-weight: 400 700;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(/fonts/noto-sans-georgian-v48-georgian.woff2) format('woff2');
+  unicode-range: U+0589, U+10A0-10FF, U+1C90-1CBA, U+1CBD-1CBF, U+205A, U+2D00-2D2F, U+2E31;
+}
+/* Unbounded, cyrillic */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 500 700;
+  font-display: swap;
+  src: url(/fonts/unbounded-v12-cyrillic.woff2) format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* Unbounded, latin-ext */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 500 700;
+  font-display: swap;
+  src: url(/fonts/unbounded-v12-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* Unbounded, latin */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 500 700;
+  font-display: swap;
+  src: url(/fonts/unbounded-v12-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/*
+  Токены дизайн-системы ONEZ (DESIGN_SYSTEM.md). Новый цвет — только новым
+  токеном здесь; произвольные hex в классах запрещены (закон 5).
+  Раскладка и типографика — утилитами Tailwind в компонентах; ниже, в
+  @layer components, только арт-дирекция: фото с тонировкой, сетки, линии.
+*/
+@theme {
+  --breakpoint-xs: 30rem;      /* 480 */
+  --breakpoint-tab: 56.25rem;  /* 900 — меню и шапка переключаются здесь */
+  --breakpoint-wide: 73.75rem; /* 1180 */
+
+  --color-ink: #101416;
+  --color-ink-deep: #090d0f;
+  --color-ink-hero: #121719;
+  --color-panel: #1a2124;
+  --color-panel-soft: #222b2e;
+  --color-field: #3a4548;
+  --color-paper: #ebe9e3;
+  --color-paper-dim: #c4cac9;
+  --color-muted: #9ca6a7;
+  --color-faint: #687376;
+  --color-line: rgb(235 233 227 / 0.14);
+  --color-teal: #55c7b7;
+  --color-copper: #d66a34;
+  --color-copper-light: #ee824d;
+  --color-error: #ff7269;
+
+  --font-display: "Unbounded", "Noto Sans Georgian", "Arial Black", sans-serif;
+  --font-body: "Manrope", "Noto Sans Georgian", Arial, sans-serif;
+
+  --shadow-panel: 0 35px 90px rgb(43 19 8 / 0.22);
+  --shadow-float: 0 15px 40px rgb(0 0 0 / 0.28);
+  --ease-build: cubic-bezier(0.2, 0.65, 0.2, 1);
+}
+
+@layer base {
+  :root { --pad: clamp(20px, 3vw, 40px); }
+  @media (max-width: 900px) { :root { --pad: 22px; } }
+  @media (max-width: 640px) { :root { --pad: 18px; } }
+
+  html { scroll-behavior: smooth; background: var(--color-ink); }
+  body {
+    color: var(--color-paper);
+    background: var(--color-ink);
+    font: 16px/1.6 var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  body.menu-open { overflow: hidden; }
+  ::selection { background: var(--color-teal); color: var(--color-ink); }
+
+  /* hyphens: на 375 px «многоквартирные» переносилось посреди слова без знака переноса. */
+  h1, h2 { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.055em; text-transform: uppercase; hyphens: auto; overflow-wrap: break-word; }
+  /* Фирменный приём: контурное слово в заголовке. */
+  h1 em, h2 em { color: transparent; -webkit-text-stroke: 1px var(--color-paper); font-style: normal; }
+  .on-copper h2 em { -webkit-text-stroke-color: var(--color-ink-deep); }
+}
+
+@utility container-site {
+  width: min(calc(100% - var(--pad) * 2), 1320px);
+  margin-inline: auto;
+}
+@utility section-y {
+  padding-block: clamp(88px, 9vw, 132px);
+  @media (max-width: 640px) { padding-block: 78px; }
+}
+
+@layer components {
+  /* Появление при прокрутке. Без JS (класс .js ставится в <head>) всё видно сразу. */
+  .js .reveal, .js .reveal-stagger > * { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s var(--ease-build); }
+  .js .reveal.visible, .js .reveal-stagger.visible > * { opacity: 1; transform: none; }
+  .reveal-stagger.visible > :nth-child(2) { transition-delay: .08s; }
+  .reveal-stagger.visible > :nth-child(3) { transition-delay: .16s; }
+  .reveal-stagger.visible > :nth-child(4) { transition-delay: .24s; }
+  .reveal-stagger.visible > :nth-child(5) { transition-delay: .32s; }
+  .reveal-stagger.visible > :nth-child(6) { transition-delay: .4s; }
+
+  /* Логотип */
+  .logo-mark { position: relative; display: inline-flex; width: 27px; height: 25px; gap: 3px; align-items: flex-end; transform: skewY(-12deg); }
+  .logo-mark i { display: block; width: 7px; background: var(--color-teal); }
+  .logo-mark i:nth-child(1) { height: 17px; }
+  .logo-mark i:nth-child(2) { height: 25px; }
+  .logo-mark i:nth-child(3) { height: 20px; background: var(--color-copper); }
+  @media (min-width: 640px) { .logo-mark { width: 31px; height: 29px; } .logo-mark i { width: 8px; } }
+
+  /* Герой главной */
+  .hero-image {
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, rgb(9 13 15 / .88) 0%, rgb(9 13 15 / .5) 47%, rgb(9 13 15 / .08) 78%),
+      linear-gradient(0deg, rgb(9 13 15 / .92) 0%, rgb(9 13 15 / .12) 58%),
+      url("/assets/onez-construction-hero.webp") center 48% / cover no-repeat;
+    /* Без анимации появления: любая анимация полноэкранного фона задерживала первый кадр на телефоне (ONEZ-22). */
+  }
+  @media (max-width: 900px) { .hero-image { background-position: center, center, 58% center; } }
+  @media (max-width: 640px) {
+    .hero-image { background: linear-gradient(0deg, rgb(9 13 15 / .96), rgb(9 13 15 / .15) 70%), url("/assets/onez-construction-hero-m.webp") 63% center / cover no-repeat; }
+  }
+  .hero-grid {
+    position: absolute; inset: 0; width: min(calc(100% - var(--pad) * 2), 1320px); margin: 0 auto;
+    border-inline: 1px solid rgb(255 255 255 / .07);
+    background-image: repeating-linear-gradient(90deg, transparent 0, transparent calc(8.333% - 1px), rgb(255 255 255 / .045) calc(8.333% - 1px), rgb(255 255 255 / .045) 8.333%);
+    mask-image: linear-gradient(to bottom, transparent 5%, black 45%, transparent 92%);
+  }
+  .hero-note i { position: relative; width: 42px; height: 42px; border: 1px solid rgb(255 255 255 / .3); border-radius: 50%; }
+  .hero-note i::before, .hero-note i::after { content: ""; position: absolute; background: var(--color-teal); }
+  .hero-note i::before { width: 1px; height: 58px; left: 50%; top: -9px; }
+  .hero-note i::after { width: 58px; height: 1px; left: -9px; top: 50%; }
+  .scroll-cue { transform: rotate(-90deg) translateX(100%); transform-origin: bottom right; }
+  .scroll-cue span::after { content: ""; position: absolute; right: 0; top: -2px; width: 5px; height: 5px; border-radius: 50%; background: var(--color-teal); animation: pulse 1.8s ease infinite; }
+
+  /* Герои внутренних страниц: одна библиотека сюжетов (DESIGN_SYSTEM.md → «Библиотека героев») */
+  /* Без filter: полноэкранный saturate() держал первую отрисовку ~1,5 с на телефоне (ONEZ-22);
+     приглушение даёт градиент затемнения. */
+  .page-hero-image { position: absolute; inset: 0; }
+  /* Герой без своего сюжета (о компании, контакты, объекты, политика, команда) */
+  .page-hero-image.hero-default { background: linear-gradient(90deg, rgb(9 13 15 / .9) 0%, rgb(9 13 15 / .55) 50%, rgb(9 13 15 / .15) 85%),
+      linear-gradient(0deg, rgb(9 13 15 / .95) 0%, rgb(9 13 15 / .2) 60%),
+      url("/assets/onez-construction-hero.webp") center 40% / cover no-repeat; }
+  .page-hero-image[class*="hero-"], .page-hero-image[class*="img-"] { background-size: cover; background-repeat: no-repeat; }
+  .page-hero-image[class*="img-"] { background-position: center 50%; }
+  .page-hero-image.hero-residential { background-image: linear-gradient(90deg, rgb(9 13 15 / .94) 0%, rgb(9 13 15 / .62) 48%, rgb(9 13 15 / .16) 86%), linear-gradient(0deg, rgb(9 13 15 / .94), rgb(9 13 15 / .12) 68%), url("/assets/hero-residential.webp"); background-position: center, center, 58% center; }
+  .page-hero-image.hero-industrial { background-image: linear-gradient(90deg, rgb(9 13 15 / .94) 0%, rgb(9 13 15 / .6) 50%, rgb(9 13 15 / .12) 88%), linear-gradient(0deg, rgb(9 13 15 / .94), rgb(9 13 15 / .12) 68%), url("/assets/hero-industrial.webp"); background-position: center, center, 61% center; }
+  .page-hero-image.hero-private { background-image: linear-gradient(90deg, rgb(9 13 15 / .94) 0%, rgb(9 13 15 / .58) 50%, rgb(9 13 15 / .12) 88%), linear-gradient(0deg, rgb(9 13 15 / .94), rgb(9 13 15 / .12) 68%), url("/assets/hero-private.webp"); background-position: center, center, 63% center; }
+  .page-hero-image.hero-process { background-image: linear-gradient(90deg, rgb(9 13 15 / .96) 0%, rgb(9 13 15 / .64) 52%, rgb(9 13 15 / .18) 88%), linear-gradient(0deg, rgb(9 13 15 / .96), rgb(9 13 15 / .12) 68%), url("/assets/process-quality-control.webp"); background-position: center, center, 58% center; }
+  .page-hero-image.hero-site-check { background-image: linear-gradient(90deg, rgb(9 13 15 / .96) 0%, rgb(9 13 15 / .62) 50%, rgb(9 13 15 / .14) 88%), linear-gradient(0deg, rgb(9 13 15 / .96), rgb(9 13 15 / .12) 68%), url("/assets/hero-site-check.webp"); background-position: center, center, 56% center; }
+  .page-hero-image.hero-fixed-price { background-image: linear-gradient(90deg, rgb(9 13 15 / .96) 0%, rgb(9 13 15 / .62) 50%, rgb(9 13 15 / .14) 88%), linear-gradient(0deg, rgb(9 13 15 / .96), rgb(9 13 15 / .12) 68%), url("/assets/hero-fixed-price.webp"); background-position: center, center, 57% center; }
+
+  /* Телефоны: облегчённые герои 820 px; фон по умолчанию — квадратный кроп 560 px, 27 КБ (ONEZ-22) */
+  @media (max-width: 640px) {
+    .page-hero-image.hero-residential { background-image: linear-gradient(90deg, rgb(9 13 15 / .94) 0%, rgb(9 13 15 / .62) 48%, rgb(9 13 15 / .16) 86%), linear-gradient(0deg, rgb(9 13 15 / .94), rgb(9 13 15 / .12) 68%), url("/assets/hero-residential-m.webp"); }
+    .page-hero-image.hero-industrial { background-image: linear-gradient(90deg, rgb(9 13 15 / .94) 0%, rgb(9 13 15 / .6) 50%, rgb(9 13 15 / .12) 88%), linear-gradient(0deg, rgb(9 13 15 / .94), rgb(9 13 15 / .12) 68%), url("/assets/hero-industrial-m.webp"); }
+    .page-hero-image.hero-private { background-image: linear-gradient(90deg, rgb(9 13 15 / .94) 0%, rgb(9 13 15 / .58) 50%, rgb(9 13 15 / .12) 88%), linear-gradient(0deg, rgb(9 13 15 / .94), rgb(9 13 15 / .12) 68%), url("/assets/hero-private-m.webp"); }
+    .page-hero-image.hero-process { background-image: linear-gradient(90deg, rgb(9 13 15 / .96) 0%, rgb(9 13 15 / .64) 52%, rgb(9 13 15 / .18) 88%), linear-gradient(0deg, rgb(9 13 15 / .96), rgb(9 13 15 / .12) 68%), url("/assets/process-quality-control-m.webp"); }
+    .page-hero-image.hero-site-check { background-image: linear-gradient(90deg, rgb(9 13 15 / .96) 0%, rgb(9 13 15 / .62) 50%, rgb(9 13 15 / .14) 88%), linear-gradient(0deg, rgb(9 13 15 / .96), rgb(9 13 15 / .12) 68%), url("/assets/hero-site-check-m.webp"); }
+    .page-hero-image.hero-fixed-price { background-image: linear-gradient(90deg, rgb(9 13 15 / .96) 0%, rgb(9 13 15 / .62) 50%, rgb(9 13 15 / .14) 88%), linear-gradient(0deg, rgb(9 13 15 / .96), rgb(9 13 15 / .12) 68%), url("/assets/hero-fixed-price-m.webp"); }
+    .page-hero-image.hero-default { background-image: linear-gradient(90deg, rgb(9 13 15 / .9) 0%, rgb(9 13 15 / .55) 50%, rgb(9 13 15 / .15) 85%), linear-gradient(0deg, rgb(9 13 15 / .95) 0%, rgb(9 13 15 / .2) 60%), url("/assets/onez-construction-hero-page-m.webp"); }
+  }
+
+  /* Концепт-визуализации объектов: обязательная видимая маркировка до замены на фото */
+  .project-image { position: relative; overflow: hidden; background: var(--color-panel); filter: saturate(.35); transition: filter .45s ease; }
+  .project-image > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .project-shade { position: absolute; inset: 0; background: linear-gradient(0deg, rgb(9 13 15 / .32), transparent 65%); }
+  .project-image::before { content: "КОНЦЕПТ-ВИЗУАЛИЗАЦИЯ"; position: absolute; z-index: 3; top: 14px; left: 14px; padding: 7px 9px; color: var(--color-paper); background: rgb(9 13 15 / .72); backdrop-filter: blur(8px); font: 700 8px/1 var(--font-body); letter-spacing: .12em; }
+  html[lang="ka"] .project-image::before { content: "კონცეფტ-ვიზუალიზაცია"; }
+  html[lang="en"] .project-image::before { content: "CONCEPT VISUAL"; }
+  .project-image::after { content: ""; position: absolute; inset: 0; background: linear-gradient(130deg, transparent 20%, rgb(85 199 183 / .18)); mix-blend-mode: screen; opacity: 0; transition: opacity .35s ease; }
+  .group:hover .project-image { filter: saturate(.8); }
+  .group:hover .project-image::after { opacity: 1; }
+  .img-a > img { object-position: center 48%; }
+  .img-b > img { object-position: center 62%; }
+  .img-c > img { object-position: center 45%; }
+  .img-d > img { object-position: center 45%; }
+  .img-e > img { object-position: center 52%; }
+  .img-f > img { object-position: center 52%; }
+  .page-hero-image.img-a { background-image: linear-gradient(90deg, rgb(9 13 15 / .94), rgb(9 13 15 / .42) 62%, rgb(9 13 15 / .12)), linear-gradient(0deg, rgb(9 13 15 / .92), transparent 65%), url("/assets/project-saburtalo.webp"); }
+  .page-hero-image.img-b { background-image: linear-gradient(90deg, rgb(9 13 15 / .94), rgb(9 13 15 / .42) 62%, rgb(9 13 15 / .12)), linear-gradient(0deg, rgb(9 13 15 / .92), transparent 65%), url("/assets/project-rustavi.webp"); }
+  .page-hero-image.img-c { background-image: linear-gradient(90deg, rgb(9 13 15 / .94), rgb(9 13 15 / .42) 62%, rgb(9 13 15 / .12)), linear-gradient(0deg, rgb(9 13 15 / .92), transparent 65%), url("/assets/project-tskhneti.webp"); }
+  .page-hero-image.img-d { background-image: linear-gradient(90deg, rgb(9 13 15 / .94), rgb(9 13 15 / .42) 62%, rgb(9 13 15 / .12)), linear-gradient(0deg, rgb(9 13 15 / .92), transparent 65%), url("/assets/project-vake.webp"); }
+  .page-hero-image.img-e { background-image: linear-gradient(90deg, rgb(9 13 15 / .94), rgb(9 13 15 / .42) 62%, rgb(9 13 15 / .12)), linear-gradient(0deg, rgb(9 13 15 / .92), transparent 65%), url("/assets/project-gldani.webp"); }
+  .page-hero-image.img-f { background-image: linear-gradient(90deg, rgb(9 13 15 / .94), rgb(9 13 15 / .42) 62%, rgb(9 13 15 / .12)), linear-gradient(0deg, rgb(9 13 15 / .92), transparent 65%), url("/assets/project-lisi.webp"); }
+  .img-g > img { object-position: center 55%; }
+  .img-h > img { object-position: center 55%; }
+  .img-i > img { object-position: center 50%; }
+  .page-hero-image.img-g { background-image: linear-gradient(90deg, rgb(9 13 15 / .94), rgb(9 13 15 / .42) 62%, rgb(9 13 15 / .12)), linear-gradient(0deg, rgb(9 13 15 / .92), transparent 65%), url("/assets/project-digomi.webp"); }
+  .page-hero-image.img-h { background-image: linear-gradient(90deg, rgb(9 13 15 / .94), rgb(9 13 15 / .42) 62%, rgb(9 13 15 / .12)), linear-gradient(0deg, rgb(9 13 15 / .92), transparent 65%), url("/assets/project-marneuli.webp"); }
+  .page-hero-image.img-i { background-image: linear-gradient(90deg, rgb(9 13 15 / .94), rgb(9 13 15 / .42) 62%, rgb(9 13 15 / .12)), linear-gradient(0deg, rgb(9 13 15 / .92), transparent 65%), url("/assets/project-betania.webp"); }
+
+  /* Карточки направлений */
+  .direction-art { background: var(--color-panel-soft); }
+  .direction-art > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .direction-art::after { content: ""; position: absolute; z-index: 2; inset: 0; background: linear-gradient(0deg, rgb(9 13 15 / .98) 5%, rgb(9 13 15 / .32) 66%, rgb(9 13 15 / .04)), linear-gradient(0deg, rgb(9 13 15 / .28), rgb(9 13 15 / .05)); }
+  .direction-residential > img { object-position: 61% center; }
+  .direction-industrial > img { object-position: 64% center; }
+  .direction-private > img { object-position: 66% center; }
+
+  /* Этапы: номер-водяной знак и плюс/минус */
+  .process-step::before { content: attr(data-step); position: absolute; right: 18px; top: 50%; color: rgb(255 255 255 / .025); font: 700 112px/1 var(--font-display); transform: translateY(-50%); pointer-events: none; }
+  @media (max-width: 900px) { .process-step::before { display: none; } }
+
+  .control-blueprint { position: absolute; z-index: -1; right: -3vw; top: 40px; color: transparent; opacity: .09; font: 700 25vw/.8 var(--font-display); letter-spacing: -.12em; -webkit-text-stroke: 1px var(--color-teal); pointer-events: none; }
+
+  /* Сцена команды (сгенерированное фото, подпись «репрезентативная сцена») */
+  /* Фото секции — <img> внутри (ONEZ-53): фон оставлен только как цвет-подложка,
+     чтобы блок не мигал белым, пока картинка грузится. */
+  .about-photo { position: relative; aspect-ratio: 4 / 4.5; max-height: 700px; overflow: hidden; background: var(--color-panel); }
+  .about-photo > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 58% 48%; }
+  @media (min-width: 640px) { .about-photo { aspect-ratio: 4 / 5; } }
+  .about-photo::before { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgb(9 13 15 / .55), transparent 35%); }
+  .about-photo .crosshair { position: absolute; z-index: 3; right: 20px; bottom: 20px; width: 64px; height: 64px; border: 1px solid rgb(255 255 255 / .35); border-radius: 50%; }
+  .about-photo .crosshair::before, .about-photo .crosshair::after { content: ""; position: absolute; background: var(--color-teal); }
+  .about-photo .crosshair::before { top: 50%; left: -12px; width: 88px; height: 1px; }
+  .about-photo .crosshair::after { left: 50%; top: -12px; width: 1px; height: 88px; }
+
+  /* Медная секция заявки: вертикальные линии уровня */
+  .contact-lines { position: absolute; inset: 0; opacity: .14; background: repeating-linear-gradient(90deg, transparent 0 8.25%, var(--color-ink) 8.3% 8.35%); mask-image: linear-gradient(90deg, transparent, black 35%, black); }
+  /* Верхняя линия секции во всю ширину контейнера */
+  .top-rule::before { content: ""; position: absolute; top: 0; left: 50%; width: min(calc(100% - var(--pad) * 2), 1320px); height: 4px; background: var(--rule, var(--color-teal)); transform: translateX(-50%); }
+
+  /* Условная карта зоны выезда */
+  .map-grid { background: radial-gradient(circle at 60% 40%, rgb(85 199 183 / .12), transparent 45%), repeating-linear-gradient(0deg, transparent 0 39px, rgb(255 255 255 / .05) 39px 40px), repeating-linear-gradient(90deg, transparent 0 39px, rgb(255 255 255 / .05) 39px 40px), var(--color-ink); }
+}
+
+@keyframes pulse { 50% { box-shadow: 0 0 0 7px rgb(85 199 183 / .12); } }
+
+/* Десктоп с мышью: этап раскрывается при наведении, клик и клавиатура работают как прежде.
+   Вне слоёв — иначе утилиты grid-rows-[0fr]/opacity-0 перебивают правило.
+   На тач-устройствах не действует: там :hover залипает после касания. */
+@media (hover: hover) and (pointer: fine) {
+  .process-step:hover > div[id] { grid-template-rows: 1fr; opacity: 1; }
+}
+
+/* Грузинский: у мхедрули нет регистра, заголовкам нужен меньший трекинг. Вне слоёв — сильнее утилит. */
+html[lang="ka"] :is(h1, h2, h3) { letter-spacing: -0.02em; }
+/* Мхедрули шире кириллицы: заголовок героя главной на ka на ступень мельче, иначе четыре строки не входят в экран. */
+html[lang="ka"] #hero-title { font-size: clamp(28px, 8.4vw, 40px); }
+@media (min-width: 40rem) { html[lang="ka"] #hero-title { font-size: clamp(34px, 6.2vw, 52px); } }
+@media (min-width: 56.25rem) { html[lang="ka"] #hero-title { font-size: clamp(40px, 4.6vw, 72px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  .js .reveal, .js .reveal-stagger > * { opacity: 1; transform: none; }
+}
+
+/* Кабинет /admin — в палитре сайта (закон 5: только токены темы). Тёмная
+   поверхность сайдбара и шапки, контент на тон светлее, карточки — панель.
+   Медь — главное действие, бирюза — состояние и акценты. */
+@layer components {
+  .admin-shell, .admin-aside, .admin-topbar { background: var(--color-ink-deep); }
+  .admin-topbar { position: sticky; top: 0; z-index: 80; border-bottom: 1px solid var(--color-line); }
+  .admin-content { background: var(--color-ink); border-top-left-radius: 28px; }
+  .admin-card { background: var(--color-panel); border: 1px solid var(--color-line); border-radius: 1.25rem; }
+  /* Заголовок кабинета — та же типографика, что у секций сайта, только мельче. */
+  .admin-shell h1 { font-size: 20px; letter-spacing: -0.04em; }
+}
