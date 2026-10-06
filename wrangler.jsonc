@@ -10,7 +10,7 @@
     // /ru/uslugi отдаёт ru/uslugi/index.html без редиректа на слеш — адреса как на старом сайте.
     "html_handling": "force-trailing-slash",
     // Статика выигрывает; всё остальное (404) доходит до Worker.
-    "not_found_handling": "none",
+    "not_found_handling": "single-page-app",
     // Старые адреса *.html сначала идут в Worker: он отдаёт 301 на чистый адрес.
     // Без этого раздача статики отвечает на них 307 раньше Worker.
     // /api/lead — приём заявки в Telegram (workers/lead.ts).
