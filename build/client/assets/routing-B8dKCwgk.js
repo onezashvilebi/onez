@@ -1,1 +1,0 @@
-import{a as e}from"./pages-Dio-JpZR.js";function t(...e){let t=e.slice(0,-1),n=e[e.length-1];return[[``,`Главная`],...t,[null,n]]}function n(t,n){let r=e(n),i=t.find(e=>e.slug===r);if(!i)throw new Response(null,{status:404});return i}export{t as n,n as t};

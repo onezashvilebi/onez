@@ -1,4 +1,4 @@
-import { $ as STEPS, Ct as instrumentHandler, Et as RouterContextProvider, Ft as isRouteErrorResponse, Ht as redirectDocument, Kt as stripBasename, Nt as getRoutePattern, St as isResponse, T as CENA_PRICES, Tt as ErrorResponseImpl, Ut as removeTrailingSlash, Vt as redirect, Wt as replace, _ as MONOLITH, a as EMAIL, at as NO_BODY_STATUS_CODES, b as CENA_CONTRACT, bt as isRedirectResponse, ct as decodeViaTurboStream, dt as escapeHtml$2, et as extractContact, gt as getStaticContextFromError, ht as createStaticHandler, jt as defaultMapRouteProperties, kt as createDataFunctionUrl, nt as getManifestPath, ot as SingleFetchRedirectSymbol, p as PHONE, ut as encode, vt as isDataWithResponseInit, w as CENA_PAYMENT, wt as instrumentationResultMetaContext, xt as isRedirectStatusCode, y as SERVICES, yt as isMutationMethod, zt as matchRoutesImpl } from "./assets/contacts-DkvbPXP-.js";
+import { Ct as isRedirectResponse, Dt as instrumentationResultMetaContext, Et as instrumentHandler, Gt as redirectDocument, Ht as matchRoutesImpl, It as getRoutePattern, Kt as removeTrailingSlash, Mt as createDataFunctionUrl, Ot as ErrorResponseImpl, Pt as defaultMapRouteProperties, Rt as isRouteErrorResponse, St as isMutationMethod, T as CENA_PRICES, Tt as isResponse, Wt as redirect, Yt as stripBasename, _ as MONOLITH, a as EMAIL, at as getManifestPath, b as CENA_CONTRACT, ct as NO_BODY_STATUS_CODES, dt as decodeViaTurboStream, kt as RouterContextProvider, lt as SingleFetchRedirectSymbol, mt as escapeHtml$2, nt as STEPS, p as PHONE, pt as encode, qt as replace, rt as extractContact, vt as createStaticHandler, w as CENA_PAYMENT, wt as isRedirectStatusCode, xt as isDataWithResponseInit, y as SERVICES, yt as getStaticContextFromError } from "./assets/contacts-BYdavGwP.js";
 import { DurableObject } from "cloudflare:workers";
 //#region node_modules/cookie-es/dist/index.mjs
 function splitSetCookieString(cookiesString) {
@@ -1608,7 +1608,7 @@ async function handleAdmin(request, env) {
 }
 //#endregion
 //#region workers/app.ts
-var requestHandler = createRequestHandler(() => import("./assets/server-build-DNeQgbJ0.js"), "production");
+var requestHandler = createRequestHandler(() => import("./assets/server-build-Dv4hStec.js"), "production");
 /** Дублирует заголовки безопасности из public/_headers — они на ответы Worker не действуют. */
 var SECURITY_HEADERS = {
 	"X-Content-Type-Options": "nosniff",
