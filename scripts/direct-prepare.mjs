@@ -16,7 +16,7 @@ const C = 714328501;
 // «Параметры URL» кампании: Директ сам дописывает их к каждой ссылке, поэтому
 // в Href объявлений и быстрых ссылок меток нет — иначе метки задвоятся.
 const TRACKING = 'utm_source=yandex&utm_medium=cpc&utm_campaign={campaign_id}&utm_content={ad_id}&utm_term={keyword}';
-const METRIKA_ID = 112457250;
+const METRIKA_ID = 113562016;
 // Цель, по которой считается конверсия: отправленная заявка (lead_sent в metrika.ts).
 const PRIORITY_GOAL = 'lead_sent';
 const S = 'https://onez.ge';
