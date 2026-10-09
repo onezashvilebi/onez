@@ -33,7 +33,7 @@ export const MAP_LINK = "https://maps.google.com/?cid=9667708027843689739";
 /** Часы работы офиса — как в Google Business Profile; суббота по договорённости не входит. */
 /** Круглосуточно, как в карточке Google (подтверждение владельца 23.09.2026): единый NAP. */
 export const OPENING_HOURS = { days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], opens: "00:00", closes: "23:59" };
-export const METRIKA_ID = 112457250;
+export const METRIKA_ID = 113562016;
 
 /** Каналы связи для ContactLink: адрес и подпись по умолчанию. */
 export const CHANNELS = {
