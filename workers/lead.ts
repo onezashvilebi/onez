@@ -27,7 +27,7 @@ const json = (body: unknown, status = 200) => Response.json(body, { status });
 
 /** На каком языке отвечать: первый язык браузера, без него — язык страницы. */
 export function replyLanguage(browserLang: string, siteLang: string): string {
-  const code = (browserLang.split(",")[0] || siteLang).trim().slice(0, 2).toLowerCase();
+  const code = (siteLang || browserLang.split(",")[0] || "").trim().slice(0, 2).toLowerCase();
   return LANG_NAME[code] ? `${LANG_NAME[code]} (${code})` : code || siteLang;
 }
 
