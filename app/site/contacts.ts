@@ -36,8 +36,8 @@ export const OPENING_HOURS = { days: ["Monday", "Tuesday", "Wednesday", "Thursda
 export const METRIKA_ID = 113562016;
 /** Google: Analytics 4 (G-…), Google Ads (AW-…) и метка конверсии «Заявка». Пустая строка — не подключается. */
 export const GA_ID = "G-SNNLPCZM6D";
-export const GADS_ID = """";
-export const GADS_LEAD_LABEL = """";
+export const GADS_ID = " ";
+export const GADS_LEAD_LABEL = " ";
 
 /** Каналы связи для ContactLink: адрес и подпись по умолчанию. */
 export const CHANNELS = {
