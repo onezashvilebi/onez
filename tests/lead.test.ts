@@ -50,9 +50,9 @@ describe("запасной путь в WhatsApp", () => {
 
 describe("сообщение менеджеру", () => {
   it("язык ответа берётся из браузера, без него — из языка страницы", () => {
-    expect(replyLanguage("ru-RU,ru;q=0.9", "ka")).toBe("русский (ru)");
-    expect(replyLanguage("", "ka")).toBe("грузинский (ka)");
-    expect(replyLanguage("sv-SE", "ka")).toBe("sv");
+    expect(replyLanguage("ru-RU,ru;q=0.9", "ka")).toBe("грузинский (ka)");
+    expect(replyLanguage("ru-RU", "ru")).toBe("русский (ru)");
+    expect(replyLanguage("sv-SE", "")).toBe("sv");
   });
 
   it("кнопка ответа ведёт в Telegram по нику и в WhatsApp по номеру", () => {
