@@ -15,7 +15,7 @@ export function ConsentBanner() {
   return (
     <section aria-label={t("Аналитика на сайте")} className="fixed inset-x-3 bottom-[74px] z-95 border border-line bg-panel p-4 text-paper shadow-panel tab:inset-x-auto tab:bottom-7 tab:left-7 tab:max-w-[380px]">
       <p className="text-[12px] leading-relaxed text-paper-dim">
-        {t("Мы используем Яндекс.Метрику с записью сессий, чтобы понимать, что на сайте неудобно.")}{" "}
+        {t("Мы используем Яндекс.Метрику с записью сессий и Google Analytics, чтобы понимать, что на сайте неудобно.")}
         <Link to={href("politika")} className="underline underline-offset-3 hover:text-teal">{t("Подробнее")}</Link>
       </p>
       <div className="mt-3 flex gap-2">

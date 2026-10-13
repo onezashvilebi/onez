@@ -34,6 +34,10 @@ export const MAP_LINK = "https://maps.google.com/?cid=9667708027843689739";
 /** Круглосуточно, как в карточке Google (подтверждение владельца 23.09.2026): единый NAP. */
 export const OPENING_HOURS = { days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], opens: "00:00", closes: "23:59" };
 export const METRIKA_ID = 113562016;
+/** Google: Analytics 4 (G-…), Google Ads (AW-…) и метка конверсии «Заявка». Пустая строка — не подключается. */
+export const GA_ID = "G-SNNLPCZM6D";
+export const GADS_ID = """";
+export const GADS_LEAD_LABEL = """";
 
 /** Каналы связи для ContactLink: адрес и подпись по умолчанию. */
 export const CHANNELS = {

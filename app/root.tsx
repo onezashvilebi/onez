@@ -10,6 +10,7 @@ import appCssInline from "./app.css?inline";
 import { captureAttribution } from "./lib/attribution";
 import { BOOT_SCRIPT, markHydrated } from "./lib/boot";
 import { METRIKA_SNIPPET, useMetrika } from "./lib/metrika";
+import { GOOGLE_SNIPPET } from "./lib/google";
 import { langFromPath } from "./site/pages";
 
 // Шрифты — со своего домена (@font-face в app.css, файлы в public/fonts): без
@@ -58,6 +59,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <ScrollRestoration />
         <Scripts />
         {!admin && <script dangerouslySetInnerHTML={{ __html: METRIKA_SNIPPET }} />}
+        {!admin && <script dangerouslySetInnerHTML={{ __html: GOOGLE_SNIPPET }} />}
       </body>
     </html>
   );

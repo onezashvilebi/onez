@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { CONSENT_KEY } from "~/lib/metrika";
 import { METRIKA_ID } from "~/site/contacts";
+import { disableGoogle } from "~/lib/google";
 
 /**
  * Выбор посетителя по аналитике (ONEZ-45). Пока выбора нет — показываем баннер.
@@ -23,7 +24,10 @@ export function useConsent() {
     } catch {
       // выбор не сохранится, но на этой странице применится
     }
-    if (value === "no") (window as unknown as Record<string, unknown>)[`disableYaCounter${METRIKA_ID}`] = true;
+    if (value === "no") {
+      (window as unknown as Record<string, unknown>)[`disableYaCounter${METRIKA_ID}`] = true;
+      disableGoogle();
+    }
     setVisible(false);
   }
 

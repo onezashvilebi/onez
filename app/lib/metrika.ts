@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useLocation } from "react-router";
 import { METRIKA_ID } from "~/site/contacts";
+import { googleGoal } from "~/lib/google";
 
 declare global {
   interface Window {
@@ -11,6 +12,7 @@ declare global {
 /** Цель Яндекс.Метрики. Новая кнопка связи → новая цель (закон 8). */
 export function goal(name: "phone_click" | "whatsapp_click" | "telegram_click" | "facebook_click" | "email_click" | "lead_form" | "lead_sent" | "chat_open" | "chat_message" | "chat_phone", params?: Record<string, string>) {
   window.ym?.(METRIKA_ID, "reachGoal", name, params);
+    googleGoal(name, params);
 }
 
 /** Хиты при переходах внутри SPA и цели кликов по каналам связи (закон 8). */
