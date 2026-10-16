@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router";
 import { Icon, type IconName } from "~/components/ui/icons";
 import { ButtonLink, ContactLink } from "~/components/ui/primitives";
+import { NUMBERS } from "~/site/contacts";
 import { NAV, activeNav } from "~/content/navigation";
 import { useMobileMenu, useScrolled } from "~/hooks/layout";
 import { useI18n } from "~/i18n/context";
@@ -104,7 +105,12 @@ export function Header() {
         </nav>
         <div className={cn("hidden items-center gap-6", bp.show)}>
           <LangSwitch separators className="hidden wide:flex" />
-          <ContactLink channel="phone" className="hidden text-xs font-semibold whitespace-nowrap wide:inline" />
+          {NUMBERS.map((n, i) => (
+            <span key={n.phone} className={i ? "hidden items-baseline gap-1.5 min-[1400px]:flex" : "hidden items-baseline gap-1.5 wide:flex"}>
+              <ContactLink channel={n.phone} className="text-xs font-semibold whitespace-nowrap" />
+              <span className="text-[9px] font-bold tracking-[.08em] text-faint uppercase">{n.tag}</span>
+            </span>
+          ))}
           <ChannelIcons channels={["whatsapp", "telegram"]} className="gap-2 [&_a]:size-9 [&_svg]:size-4" />
           {/* outline: шапка видна поверх hero с медной кнопкой — на экране должна остаться одна (закон 6). */}
           <ButtonLink to="kontakty#form" variant="outline" size="sm">Обсудить проект</ButtonLink>
@@ -124,13 +130,29 @@ export function Header() {
         inert={!menu.open}
         aria-hidden={!menu.open}
         className={cn(
-          "fixed inset-0 -z-1 flex flex-col justify-between bg-ink-deep px-(--pad) pt-[105px] pb-[86px] transition-[opacity,visibility] duration-300",
+          "fixed inset-0 overflow-y-auto -z-1 flex flex-col justify-between bg-ink-deep px-(--pad) pt-[105px] pb-[86px] transition-[opacity,visibility] duration-300",
           bp.hide,
           menu.open ? "visible opacity-100" : "invisible opacity-0",
         )}
       >
         <nav aria-label={t("Мобильная навигация")} className="flex flex-col"><NavLinks variant="mobile" /></nav>
-        <ButtonLink to="kontakty#form" className="w-full">Обсудить проект</ButtonLink>
+        <div className="mt-8 flex flex-col gap-6">
+          <div className="flex flex-col gap-3">
+            {NUMBERS.map((n) => (
+              <div key={n.phone} className="flex items-center justify-between gap-3 border-t border-line pt-3">
+                <p className="flex items-baseline gap-2">
+                  <ContactLink channel={n.phone} className="font-display text-xl font-medium tracking-[-.03em]" />
+                  <span className="text-[10px] font-bold tracking-[.08em] text-faint uppercase">{n.tag}</span>
+                </p>
+                <div className="flex gap-2">
+                  <ContactLink channel={n.whatsapp} ariaLabel={t(CHANNEL_ICON.whatsapp[1])} className="grid size-9 place-items-center rounded-full border border-line text-paper/85"><Icon name="whatsapp" className="size-4" /></ContactLink>
+                  <ContactLink channel={n.telegram} ariaLabel={t(CHANNEL_ICON.telegram[1])} className="grid size-9 place-items-center rounded-full border border-line text-paper/85"><Icon name="telegram" className="size-4" /></ContactLink>
+                </div>
+              </div>
+            ))}
+          </div>
+          <ButtonLink to="kontakty#form" className="w-full">Обсудить проект</ButtonLink>
+        </div>
       </div>
     </header>
   );

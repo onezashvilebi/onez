@@ -2,7 +2,7 @@ import type { MetaDescriptor } from "react-router";
 import { translate, type Dict } from "~/i18n/context";
 import { modifiedFor } from "~/logic/modified";
 import type { Crumb } from "~/logic/routing";
-import { ADDRESS_EN, COORDS, EMAIL, FACEBOOK, FACEBOOK_RU, LEGAL_NAME_KA, MAP_LINK, OPENING_HOURS, PHONE, SITE_URL, TAX_ID } from "~/site/contacts";
+import { ADDRESS_EN, COORDS, EMAIL, FACEBOOK, FACEBOOK_RU, LEGAL_NAME_KA, MAP_LINK, OPENING_HOURS, PHONE, PHONE_2, SITE_URL, TAX_ID } from "~/site/contacts";
 import { LANGS, pageOf, pathFor, slugFromPath, type Lang } from "~/site/pages";
 
 type Match = { id: string; loaderData?: unknown } | undefined;
@@ -222,7 +222,7 @@ function organization(t: (s: string) => string) {
     taxID: TAX_ID,
     url: SITE_URL,
     description: t("ONEZA Construction — монолитное строительство полного цикла в Тбилиси. Цена, сроки и состав работ фиксируются в договоре."),
-    telephone: PHONE.replace(/\s/g, ""),
+    telephone: [PHONE, PHONE_2].map((p) => p.replace(/\s/g, "")),
     email: EMAIL,
     image: `${SITE_URL}/assets/${DEFAULT_IMAGE}`,
     // Знак из логотипа сайта — он же фавикон (components/layout/Logo.tsx, public/favicon.svg).

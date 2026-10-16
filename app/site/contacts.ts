@@ -3,6 +3,11 @@ export const PHONE = "+995 599 538 277";
 export const TEL = "tel:+995599538277";
 export const WHATSAPP = "https://wa.me/995599538277";
 export const TELEGRAM = "https://t.me/+995599538277";
+/** Second number: own WhatsApp and Telegram. */
+export const PHONE_2 = "+995 511 330 091";
+export const TEL_2 = "tel:+995511330091";
+export const WHATSAPP_2 = "https://wa.me/995511330091";
+export const TELEGRAM_2 = "https://t.me/onezconstruction";
 export const EMAIL = "info@onez.ge";
 /** Страницы компании в Facebook (ONEZ-05): грузинская — для KA и EN, русская — для RU; обе в sameAs JSON-LD. */
 export const FACEBOOK = "https://www.facebook.com/61583334088458";
@@ -44,8 +49,17 @@ export const CHANNELS = {
   phone: { href: TEL, label: PHONE },
   whatsapp: { href: WHATSAPP, label: "WhatsApp" },
   telegram: { href: TELEGRAM, label: "Telegram" },
+  phone2: { href: TEL_2, label: PHONE_2 },
+  whatsapp2: { href: WHATSAPP_2, label: "WhatsApp" },
+  telegram2: { href: TELEGRAM_2, label: "Telegram" },
   email: { href: `mailto:${EMAIL}`, label: EMAIL },
   facebook: { href: FACEBOOK, label: "Facebook" },
 } as const;
 
 export type Channel = keyof typeof CHANNELS;
+
+/** Numbers for contact blocks: language caption and channels of each number. */
+export const NUMBERS = [
+  { tag: "GEO", phone: "phone", whatsapp: "whatsapp", telegram: "telegram" },
+  { tag: "RUS/EN", phone: "phone2", whatsapp: "whatsapp2", telegram: "telegram2" },
+] as const;

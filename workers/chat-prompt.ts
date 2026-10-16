@@ -4,7 +4,7 @@
 import { STEPS } from "~/content/company";
 import { CENA_CONTRACT, CENA_PAYMENT, CENA_PRICES } from "~/content/pages/misc";
 import { MONOLITH, SERVICES } from "~/content/services";
-import { EMAIL, PHONE } from "~/site/contacts";
+import { EMAIL, NUMBERS, PHONE, PHONE_2 } from "~/site/contacts";
 
 const plain = (html: string) => html.replace(/<br\s*\/?>/g, " ").replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
 
@@ -30,7 +30,7 @@ export function chatSystemPrompt(language: string): string {
     "ЧАСТЫЕ ВОПРОСЫ:",
     pages.flatMap((s) => s.faq ?? []).slice(0, 14).map(([q, a]) => `В: ${plain(q)}\nО: ${plain(a)}`).join("\n\n"),
     "",
-    `КОНТАКТЫ: телефон и WhatsApp ${PHONE}, почта ${EMAIL}.`,
+    `КОНТАКТЫ: телефон и WhatsApp ${PHONE} (${NUMBERS[0].tag}), ${PHONE_2} (${NUMBERS[1].tag}), почта ${EMAIL}.`,
     "",
     "ПРАВИЛА:",
     "1. Используй только факты выше. Не придумывай цены, сроки, скидки, адреса, имена сотрудников и примеры объектов.",

@@ -10,7 +10,7 @@ import { PAGE_META } from "~/content/pages/meta";
 import { KONTAKTY_NEXT } from "~/content/pages/misc";
 import { seo } from "~/lib/meta";
 import { crumbs } from "~/logic/routing";
-import { ADDRESS, COORDS, MAP_LINK } from "~/site/contacts";
+import { ADDRESS, COORDS, MAP_LINK, NUMBERS } from "~/site/contacts";
 
 export const meta: MetaFunction = (args) =>
   seo(args, ...PAGE_META["kontakty"]);
@@ -26,14 +26,19 @@ export default function Kontakty() {
         <div className="reveal">
           <Eyebrow>Связаться</Eyebrow>
           <address className="not-italic">
-            <p>
-              <ContactLink channel="phone" className="font-display text-[clamp(26px,2.6vw,40px)] leading-[1.1] font-semibold tracking-[-.04em] hover:text-teal" />
-            </p>
-            <p className="mt-[26px] flex flex-wrap gap-2.5">
-              <ContactLink channel="whatsapp" className={MESSENGER}><Icon name="whatsapp" />WhatsApp</ContactLink>
-              <ContactLink channel="telegram" className={MESSENGER}><Icon name="telegram" />Telegram</ContactLink>
-              <ContactLink channel="facebook" className={MESSENGER}><Icon name="facebook" />Facebook</ContactLink>
-            </p>
+            {NUMBERS.map((n, i) => (
+              <div key={n.phone} className={i ? "mt-9" : undefined}>
+                <p className="flex flex-wrap items-baseline gap-x-3">
+                  <ContactLink channel={n.phone} className="font-display text-[clamp(26px,2.6vw,40px)] leading-[1.1] font-semibold tracking-[-.04em] hover:text-teal" />
+                  <span className="text-[12px] font-bold tracking-[.08em] text-faint uppercase">{n.tag}</span>
+                </p>
+                <p className="mt-[26px] flex flex-wrap gap-2.5">
+                  <ContactLink channel={n.whatsapp} className={MESSENGER}><Icon name="whatsapp" />WhatsApp</ContactLink>
+                  <ContactLink channel={n.telegram} className={MESSENGER}><Icon name="telegram" />Telegram</ContactLink>
+                  {i === NUMBERS.length - 1 && <ContactLink channel="facebook" className={MESSENGER}><Icon name="facebook" />Facebook</ContactLink>}
+                </p>
+              </div>
+            ))}
             <SpecList compact reveal={false} items={[["Офис", <a href={MAP_LINK} target="_blank" rel="noopener" className="hover:text-teal">{t(ADDRESS)}</a>], ["Встречи", "На участке или по предварительной договорённости"], ["Почта", <ContactLink channel="email" />], ["Режим работы", "Круглосуточно: заявки принимаем в любое время"], ["Выезд на участок", "По всей Грузии, база — Тбилиси"]]} />
           </address>
         </div>

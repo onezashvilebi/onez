@@ -7,7 +7,7 @@ import { MONOLITH, SERVICES } from "~/content/services";
 import { translate } from "~/i18n/context";
 import { dictFor } from "~/i18n/dict.server";
 import { stripTags } from "~/lib/meta";
-import { ADDRESS, ADDRESS_EN, EMAIL, OPENING_HOURS, PHONE, SITE_URL, WHATSAPP } from "~/site/contacts";
+import { ADDRESS, ADDRESS_EN, EMAIL, OPENING_HOURS, PHONE, PHONE_2, SITE_URL, WHATSAPP, WHATSAPP_2 } from "~/site/contacts";
 import { LANGS, PAGES, pathFor, type Lang } from "~/site/pages";
 
 // /llms.txt по llmstxt.org: карта индексируемых страниц для ИИ-ассистентов.
@@ -64,7 +64,7 @@ export function loader() {
     `## Company\n\n- Full-cycle general contractor in Tbilisi, Georgia: monolithic reinforced concrete construction from the land check to handover ready for fit-out. Finishing works are not part of the scope.\n- Residential buildings and apart-complexes from 1 000 m², up to 20 floors, 12–20 months.\n- Warehouses, workshops and logistics centres from 1 000 m², up to 14 m clear height, 6–12 months.\n- Private houses from 160 m², 1–3 floors, 8–14 months.\n- Foundations (slab, strip, piled) and retaining walls can be ordered as a separate stage.\n- 15-point land due diligence anywhere in Georgia, written report in 3 business days; free for clients who sign a construction contract with us, charged separately otherwise.\n- Payment: 100% of materials and 15% of the work up front, the rest against stage acceptance acts. Structural warranty: 10 years. The contract price changes only if the client changes the brief.\n- Working languages: Georgian, Russian, English.`,
     `## Prices\n\n${FOREIGN.en.prices.ranges.map(([k, v]) => `- ${k}: ${v}`).join("\n")}\n\n${FOREIGN.en.prices.note}`,
     `## How a project goes\n\n${STEPS.map((s) => `${Number(s.n)}. ${t(s.title)} — ${t(s.term)}`).join("\n")}`,
-    `## Contacts\n\n- Phone and WhatsApp: ${PHONE} (${WHATSAPP})\n- Email: ${EMAIL}\n- Office: ${ADDRESS_EN} (${ADDRESS}), ${days} ${OPENING_HOURS.opens}–${OPENING_HOURS.closes}\n- [Contact form](${SITE_URL}${pathFor("en", "kontakty")})`,
+    `## Contacts\n\n- Phone and WhatsApp: ${PHONE} (${WHATSAPP}), ${PHONE_2} (${WHATSAPP_2})\n- Email: ${EMAIL}\n- Office: ${ADDRESS_EN} (${ADDRESS}), ${days} ${OPENING_HOURS.opens}–${OPENING_HOURS.closes}\n- [Contact form](${SITE_URL}${pathFor("en", "kontakty")})`,
     ...sections,
   ].join("\n\n");
   return new Response(`${body}\n`, { headers: { "Content-Type": "text/plain; charset=utf-8" } });

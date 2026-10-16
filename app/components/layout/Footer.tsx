@@ -3,7 +3,7 @@ import { Icon } from "~/components/ui/icons";
 import { ButtonLink, ContactLink, T } from "~/components/ui/primitives";
 import { FOOTER_COMPANY, FOOTER_SERVICES } from "~/content/navigation";
 import { useI18n } from "~/i18n/context";
-import { LEGAL_NAME_RU, TAX_ID } from "~/site/contacts";
+import { LEGAL_NAME_RU, NUMBERS, TAX_ID } from "~/site/contacts";
 import { Logo } from "./Logo";
 
 function Column({ title, links }: { title: string; links: [string, string][] }) {
@@ -34,9 +34,16 @@ export function Footer() {
           <Column title="Компания" links={FOOTER_COMPANY} />
           <div className="col-span-2 flex flex-col items-start sm:col-span-3 tab:col-span-1">
             <p className="mb-4 text-[10px] text-muted">{t("Тбилиси, Грузия")}</p>
-            <ContactLink channel="phone" className={FOOTER_CONTACT} />
+            {NUMBERS.map((n) => (
+              <p key={n.phone} className="flex items-baseline gap-2">
+                <ContactLink channel={n.phone} className={FOOTER_CONTACT} />
+                <span className="text-[10px] font-bold tracking-[.08em] text-muted uppercase">{n.tag}</span>
+              </p>
+            ))}
             <ContactLink channel="email" className={FOOTER_CONTACT} />
-            <ContactLink channel="whatsapp" className="mt-[18px] text-[11px] font-bold tracking-[.08em] text-teal uppercase"><span className="inline-flex items-center gap-1.5">{t("Написать в WhatsApp")}<Icon name="arrow-up-right" className="size-3.5" /></span></ContactLink>
+            {NUMBERS.map((n, i) => (
+              <ContactLink key={n.whatsapp} channel={n.whatsapp} className={i ? "mt-2.5 text-[11px] font-bold tracking-[.08em] text-teal uppercase" : "mt-[18px] text-[11px] font-bold tracking-[.08em] text-teal uppercase"}><span className="inline-flex items-center gap-1.5">{t("Написать в WhatsApp")} · {n.tag}<Icon name="arrow-up-right" className="size-3.5" /></span></ContactLink>
+            ))}
             <ContactLink channel="facebook" className="mt-2.5 text-[11px] font-bold tracking-[.08em] text-teal uppercase"><span className="inline-flex items-center gap-1.5">Facebook<Icon name="arrow-up-right" className="size-3.5" /></span></ContactLink>
           </div>
         </div>

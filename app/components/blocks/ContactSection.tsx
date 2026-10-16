@@ -8,6 +8,7 @@ import { useLeadForm } from "~/hooks/useLeadForm";
 import { useI18n } from "~/i18n/context";
 import { cn } from "~/lib/cn";
 import type { LeadRow } from "~/logic/lead";
+import { NUMBERS } from "~/site/contacts";
 
 const INPUT = "h-14 w-full rounded-none border bg-ink px-4 text-[14px] text-paper outline-none transition-colors placeholder:text-faint focus:border-teal";
 const CAPTION = "text-[10px] font-bold tracking-[.1em] text-muted uppercase";
@@ -151,13 +152,18 @@ export function ContactSection({
           <Eyebrow tone="ink">{eyebrow}</Eyebrow>
           <H2 size="contact">{title}</H2>
           <T as="p" className="mt-7 max-w-[540px]">{text}</T>
-          <p className="mt-7 flex flex-col gap-1.5">
-            <ContactLink channel="phone" className="text-[28px] font-semibold tracking-[-.01em]" />
-            <span className="text-[15px] opacity-75 [&_a]:underline [&_a]:underline-offset-3">
-              <ContactLink channel="whatsapp" /> · <ContactLink channel="telegram" />
-              {languages && ` · ${languages}`}
-            </span>
-          </p>
+          {NUMBERS.map((n, i) => (
+            <p key={n.phone} className={i ? "mt-5 flex flex-col gap-1.5" : "mt-7 flex flex-col gap-1.5"}>
+              <span className="flex flex-wrap items-baseline gap-x-3">
+                <ContactLink channel={n.phone} className="text-[28px] font-semibold tracking-[-.01em]" />
+                <span className="text-[12px] font-bold tracking-[.08em] uppercase opacity-60">{n.tag}</span>
+              </span>
+              <span className="text-[15px] opacity-75 [&_a]:underline [&_a]:underline-offset-3">
+                <ContactLink channel={n.whatsapp} /> · <ContactLink channel={n.telegram} />
+                {i === 0 && languages && ` · ${languages}`}
+              </span>
+            </p>
+          ))}
           <CalcSteps items={steps} />
         </div>
         <EstimateForm variant={variant} objtype={objtype} />
