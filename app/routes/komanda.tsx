@@ -19,7 +19,7 @@ export default function Komanda() {
       {/* <TitledSection bg="panel" eyebrow={KOMANDA_LEADS.eyebrow} title={KOMANDA_LEADS.title} intro={KOMANDA_LEADS.intro}>
         <TeamGrid items={TEAM} />
       </TitledSection>
-      <ContactSection tittle={KOMANDA_CONTACT_TITLE} />
+      <ContactSection title={KOMANDA_CONTACT_TITLE} />
     </>
   );
 }
