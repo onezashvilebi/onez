@@ -15,7 +15,7 @@ export const meta: MetaFunction = (args) =>
 export default function Komanda() {
   return (
     <>
-            {/* ВРЕМЕННО СКРЫТО
+            {/* ВРЕМЕНоНО СКРЫТО
       <TitledSection bg="panel" eyebrow={KOMANDA_LEADS.eyebrow} title={KOMANDA_LEADS.title} intro={KOMANDA_LEADS.intro}>
         <TeamGrid items={TEAM} />
       </TitledSection>
