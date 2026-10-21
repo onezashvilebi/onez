@@ -42,7 +42,7 @@ export default function OKompanii() {
         <FeatureGrid items={RESPONSIBILITIES} />
       </TitledSection>
       {/* Шесть руководителей; полный состав — на /komanda. Люди в content/team.ts пока типовые (ONEZ-78). */}
-      <TitledSection bg="dark" eyebrow={COMPANY_TEAM.eyebrow} title={COMPANY_TEAM.title} intro={COMPANY_TEAM.intro}>
+      {/* <TitledSection bg="dark" eyebrow={COMPANY_TEAM.eyebrow} title={COMPANY_TEAM.title} intro={COMPANY_TEAM.intro}>
         <TeamGrid items={TEAM.slice(0, 6)} />
         <TextLink to="komanda">Вся команда</TextLink>
       </TitledSection>
