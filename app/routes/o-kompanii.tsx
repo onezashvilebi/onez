@@ -28,8 +28,8 @@ export default function OKompanii() {
         title="С 2014 года<br><em>в монолите</em>"
         lead="Начинали с частных домов, сегодня строим жилые корпуса и производственные комплексы по всей Грузии."
         text="Мы не собираем команду заново под каждый объект. Штат монолитчиков, инженеров и снабженцев работает вместе годами, поэтому мы точно знаем свою производительность и себестоимость."
-        caption="Гиорги Онезашвили на площадке в Крцаниси · 15.09.2026"
-        photoLabel="Основатель ONEZA Construction Гиорги Онезашвили (справа, в чёрном) на армированной плите перекрытия, площадка в Крцаниси, Тбилиси"
+        caption="Основатель Георгий Онезашвили на площадке в Крцаниси · 15.09.2026"
+        photoLabel="Гиорги Онезашвили (справа, в чёрном) на армированной плите перекрытия, площадка в Крцаниси, Тбилиси"
       />
       <SiteNowSection />
       <TitledSection eyebrow="Философия" title="Как и для чего<br><em>строит ONEZA</em>" intro={COMPANY_PHILOSOPHY.intro}>
@@ -42,7 +42,7 @@ export default function OKompanii() {
         <FeatureGrid items={RESPONSIBILITIES} />
       </TitledSection>
       {/* Шесть руководителей; полный состав — на /komanda. Люди в content/team.ts пока типовые (ONEZ-78). */}
-      {/* <TitledSection bg="dark" eyebrow={COMPANY_TEAM.eyebrow} title={COMPANY_TEAM.title} intro={COMPANY_TEAM.intro}>
+      <TitledSection bg="dark" eyebrow={COMPANY_TEAM.eyebrow} title={COMPANY_TEAM.title} intro={COMPANY_TEAM.intro}>
         <TeamGrid items={TEAM.slice(0, 6)} />
         <TextLink to="komanda">Вся команда</TextLink>
       </TitledSection>

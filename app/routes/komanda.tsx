@@ -15,11 +15,10 @@ export const meta: MetaFunction = (args) =>
 export default function Komanda() {
   return (
     <>
-            {/* ВРЕМЕННО СКРЫТО
+      <PageHero eyebrow={KOMANDA_HERO.eyebrow} title={KOMANDA_HERO.title} lead={KOMANDA_HERO.lead} crumbs={crumbs("Команда")} />
       <TitledSection bg="panel" eyebrow={KOMANDA_LEADS.eyebrow} title={KOMANDA_LEADS.title} intro={KOMANDA_LEADS.intro}>
         <TeamGrid items={TEAM} />
       </TitledSection>
-      */}
       <ContactSection title={KOMANDA_CONTACT_TITLE} />
     </>
   );
