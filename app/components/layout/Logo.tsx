@@ -5,7 +5,7 @@ export function Logo() {
   const { t, href } = useI18n();
   return (
     <Link to={href("")} aria-label={t("ONEZA Construction, на главную")} className="inline-flex flex-none items-center gap-[11px] font-display text-[15px] leading-none font-bold tracking-[-.07em] sm:text-[17px]">
-      <span className="logo-mark" aria-hidden="true"><i /><i /><i /></span>
+      <img src="/assets/logo-mark.svg" alt="" width={31} height={29} className="h-[25px] w-auto sm:h-[29px]" />
       {/* На телефонах в шапке рядом языки и три иконки связи: подпись прячется до 480 px,
           слово целиком — уже 375 px (остаётся знак, название — в aria-label ссылки). */}
       {/* Подпись растягивается ровно по ширине слова ONEZA: text-align-last: justify
