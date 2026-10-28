@@ -4,7 +4,7 @@ import { TitledSection } from "~/components/ui/section";
 import { PageHero, UpdatedNote } from "~/components/blocks/PageHero";
 import { CtaBand, FaqSection, PageLayout, Stage } from "~/components/blocks/sections";
 import { CompareTable, SpecList } from "~/components/ui/lists";
-import { ButtonLink, Disclaimer } from "~/components/ui/primitives";
+import { ButtonLink } from "~/components/ui/primitives";
 import { PARTICIPATION, STEPS } from "~/content/company";
 import { PAGE_META } from "~/content/pages/meta";
 import { PROCESS_FAQ, PROCESS_HERO } from "~/content/pages/misc";
@@ -39,7 +39,6 @@ export default function Process() {
             {s.cta && <ButtonLink to={s.cta[0]} variant="outline" className="mt-[30px]">{s.cta[1]}</ButtonLink>}
           </Stage>
         ))}
-        <Disclaimer>Отделочный ремонт не выполняем — сдаём объект под отделку.</Disclaimer>
       </PageLayout>
       <FaqSection title="Что спрашивают<br><em>о порядке работ?</em>" items={PROCESS_FAQ} />
       <CtaBand title="Готовы начать<br><em>с первого этапа?</em>" to="kontakty#form" label="Обсудить проект" variant="outline" />

@@ -34,7 +34,6 @@ export const PAGE_MODIFIED: Record<string, string> = {
   "build-in-georgia": "2026-09-23",
   "investoru-v-tbilisi": "2026-09-23",
   "biznesu-sklad-i-ceh": "2026-09-23",
-  "dom-pod-otdelku": "2026-09-23",
   "podryad-na-monolit": "2026-09-23",
   "uchastok-na-sklone": "2026-09-23",
 };

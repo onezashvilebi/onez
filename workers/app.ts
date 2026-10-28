@@ -43,6 +43,13 @@ export default {
       return Response.redirect(url.toString(), 301);
     }
 
+    // Страница «Дом под отделку» снята: старый адрес ведёт на услугу «Частные дома».
+    const removed = url.pathname.match(/^(\/ru|\/en)?\/dom-pod-otdelku\/?$/);
+    if (removed) {
+      url.pathname = `${removed[1] ?? ""}/chastnye-doma`;
+      return Response.redirect(url.toString(), 301);
+    }
+
     // Адреса старого сайта: /uslugi.html, /ru/index.html → /uslugi, /ru. Ссылки из
     // поиска и мессенджеров не должны вести на 404.
     if (url.pathname.endsWith(".html")) {

@@ -29,7 +29,7 @@ export default function Uslugi() {
       </TitledSection>
       <AudienceSection />
       <MonolithSection />
-      <TitledSection bg="dark" eyebrow={USLUGI_CYCLE.eyebrow} title={USLUGI_CYCLE.title} intro={USLUGI_CYCLE.intro}>
+      <TitledSection bg="dark" eyebrow={USLUGI_CYCLE.eyebrow} title={USLUGI_CYCLE.title}>
         <ProcessList detailed />
       </TitledSection>
       <FaqSection bg="panel" title="Какое направление<br><em>подходит вам?</em>" items={USLUGI_FAQ} />

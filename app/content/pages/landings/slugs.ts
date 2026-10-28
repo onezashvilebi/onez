@@ -3,7 +3,6 @@
 export const LANDING_SLUGS = [
   "investoru-v-tbilisi",
   "biznesu-sklad-i-ceh",
-  "dom-pod-otdelku",
   "podryad-na-monolit",
   "uchastok-na-sklone",
 ] as const;

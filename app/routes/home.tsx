@@ -4,7 +4,7 @@ import { HeroStats, UpdatedNote } from "~/components/blocks/PageHero";
 import { ProcessList } from "~/components/blocks/ProcessList";
 import { ProjectsSection } from "~/components/blocks/Projects";
 import { AboutBlock, ControlSection, CtaBand, DirectionGrid, FaqSection, FixedPriceSection, MonolithGrid, SiteNowSection } from "~/components/blocks/sections";
-import { ButtonLink, Disclaimer, Eyebrow, T, TextLink } from "~/components/ui/primitives";
+import { ButtonLink, Eyebrow, T, TextLink } from "~/components/ui/primitives";
 import { H2, STAGE_TEXT, Section, SectionHead, TitledSection } from "~/components/ui/section";
 import { useI18n } from "~/i18n/context";
 import { PAGE_META } from "~/content/pages/meta";
@@ -89,7 +89,6 @@ export default function Home() {
       <Section bg="panel" id="process">
         <SectionHead eyebrow={HOME_PROCESS.eyebrow} title={HOME_PROCESS.title} size="lg" className="items-start sm:items-end" aside={<StepsCount />} />
         <ProcessList />
-        <Disclaimer>{HOME_PROCESS.disclaimer}</Disclaimer>
         <TextLink to="process">{HOME_PROCESS.link}</TextLink>
       </Section>
       <ProjectsSection id="projects" eyebrow="Форматы объектов" title="Объекты" filters cta limitMobile />

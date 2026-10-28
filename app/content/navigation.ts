@@ -13,7 +13,6 @@ export const NAV: [string, string][] = [
 export const FOOTER_SERVICES: [string, string][] = [
   ["investoru-v-tbilisi", "Инвестору"],
   ["biznesu-sklad-i-ceh", "Бизнесу"],
-  ["dom-pod-otdelku", "Дом под отделку"],
   ["podryad-na-monolit", "Подряд на монолит"],
   ["uchastok-na-sklone", "Участок на склоне"],
   ["zhilye-korpusa", "Жилые корпуса"],

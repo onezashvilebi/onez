@@ -24,7 +24,6 @@ export const HOME_SERVICES = {
 export const HOME_PROCESS = {
   eyebrow: "Полный цикл",
   title: "Как проходит<br><em>строительство?</em>",
-  disclaimer: "Отделочный ремонт не выполняем — сдаём объект под отделку.",
   link: "Подробно о каждом этапе",
 };
 
