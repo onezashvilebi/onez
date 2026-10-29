@@ -122,7 +122,7 @@ export function SiteNowSection({ bg = "dark", id }: { bg?: SectionBg; id?: strin
 }
 
 /** Фото основателя на площадке + текст о компании. */
-export function AboutBlock({ eyebrow, title, lead, text, caption, photoLabel, link, bg = "dark" }: { eyebrow: string; title: string; lead: string; text: string; caption: string; photoLabel: string; link?: [string, string]; bg?: SectionBg }) {
+export function AboutBlock({ eyebrow, title, lead, text, caption, photoLabel, link, bg = "dark" }: { eyebrow: string; title: string; lead: string; text: string; caption?: string; photoLabel: string; link?: [string, string]; bg?: SectionBg }) {
   const { t } = useI18n();
   return (
     <Section bg={bg} containerClassName="grid items-center gap-11 sm:grid-cols-2 sm:gap-[6%] tab:grid-cols-[6fr_5fr] tab:gap-[8.333%]">
@@ -143,7 +143,7 @@ export function AboutBlock({ eyebrow, title, lead, text, caption, photoLabel, li
           />
           <i className="crosshair" />
         </div>
-        <p className="mt-3 text-[10px] text-muted">{t(caption)}</p>
+        {caption && <p className="mt-3 text-[10px] text-muted">{t(caption)}</p>}
       </div>
       <div className="reveal">
         <Eyebrow>{eyebrow}</Eyebrow>

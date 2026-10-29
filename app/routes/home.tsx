@@ -100,7 +100,6 @@ export default function Home() {
         title={HOME_ABOUT.title}
         lead={HOME_ABOUT.lead}
         text={HOME_ABOUT.text}
-        caption={HOME_ABOUT.caption}
         photoLabel={HOME_ABOUT.photoLabel}
         link={["komanda", HOME_ABOUT.link]}
       />
