@@ -4,6 +4,7 @@
 // ADMIN_PASSWORD; сессия — подписанная HMAC-кука, без базы пользователей.
 import { SESSION_TTL_S, issueToken, samePassword, summary, verifyToken } from "./admin-auth";
 import { type ChatEnv, type Lead, store } from "./chat";
+import { handleSiteNowAdmin } from "./site-now";
 
 export type AdminEnv = ChatEnv & { ADMIN_PASSWORD?: string };
 
@@ -42,6 +43,9 @@ export async function handleAdmin(request: Request, env: AdminEnv): Promise<Resp
   if (!(await verifyToken(secret, readCookie(request)))) return json({ error: "unauthorized" }, 401);
 
   if (path === "/me" && request.method === "GET") return json({ ok: true });
+
+  const siteNow = await handleSiteNowAdmin(request, env, path);
+  if (siteNow) return siteNow;
 
   if (path === "/chats" && request.method === "GET") {
     const sessions = await store(env).list();

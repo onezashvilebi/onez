@@ -7,7 +7,7 @@ export type AdminMessage = ChatMessage & { at: number };
 /** Разговор в списке — то, что отдаёт `summary()` в workers/admin.ts. */
 export type ChatSummary = { id: string; page: string; lang: string; lastAt: number; contact: string | null; manual: boolean; unread: number; last: { from: "visitor" | "agent"; text: string; at: number } | null; source: string[] };
 export type Lead = { id: string; at: number; form: string; rows: { label: string; value: string }[]; lang: string; page: string; country?: string; source: string[]; delivered: boolean; done?: boolean };
-export type AdminPage = "chats" | "leads";
+export type AdminPage = "chats" | "leads" | "photos";
 
 const LIST_POLL_MS = 5000;
 const THREAD_POLL_MS = 3000;

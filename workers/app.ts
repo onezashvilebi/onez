@@ -2,6 +2,7 @@ import { createRequestHandler } from "react-router";
 import { handleAdmin, type AdminEnv } from "./admin";
 import { handleChat, type ChatEnv } from "./chat";
 import { handleLead, type LeadEnv } from "./lead";
+import { handleSiteNow } from "./site-now";
 
 export { ChatStore } from "./chat";
 
@@ -23,6 +24,7 @@ export default {
     const url = new URL(request.url);
 
     if (url.pathname === "/api/lead") return handleLead(request, env);
+    if (url.pathname.startsWith("/api/site-now")) return handleSiteNow(request, env);
     if (url.pathname.startsWith("/api/chat/")) return handleChat(request, env, ctx);
     if (url.pathname.startsWith("/api/admin/")) return handleAdmin(request, env);
 

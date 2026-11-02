@@ -59,9 +59,10 @@ export function Login({ password, setPassword, error, onSubmit }: { password: st
   );
 }
 
-const NAV: { id: AdminPage; name: string; icon: "chat" | "document" }[] = [
+const NAV: { id: AdminPage; name: string; icon: "chat" | "document" | "photo" }[] = [
   { id: "chats", name: "Чат", icon: "chat" },
   { id: "leads", name: "Заявки", icon: "document" },
+  { id: "photos", name: "Фото стройки", icon: "photo" },
 ];
 
 export function Shell({ page, setPage, badges, title, onLogout, children }: { page: AdminPage; setPage: (p: AdminPage) => void; badges: Record<AdminPage, number>; title: string; onLogout: () => void; children: ReactNode }) {

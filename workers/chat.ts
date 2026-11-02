@@ -5,6 +5,7 @@
 // сообщение посетителя: менеджеру есть кому отвечать.
 // Переписка живёт в Durable Object ChatStore (прав на KV у токена деплоя нет).
 import { DurableObject } from "cloudflare:workers";
+import type { SitePhoto } from "./site-now";
 import { extractContact } from "~/lib/phone";
 import { chatSystemPrompt } from "./chat-prompt";
 import { receivedAt, replyButton, replyLanguage, sourceLines } from "./lead";
@@ -115,6 +116,34 @@ export class ChatStore extends DurableObject {
     if (!s) return;
     s.notified = true;
     await this.ctx.storage.put(`s:${id}`, s);
+  }
+
+  /** Фото «Сейчас строим» (workers/site-now.ts): описание — pm:<id>, файл — pb:<id>; alarm() их не трогает. */
+  async photoList(): Promise<SitePhoto[]> {
+    const all = [...(await this.ctx.storage.list<SitePhoto>({ prefix: "pm:" })).values()];
+    return all.sort((a, b) => b.date.localeCompare(a.date) || b.at - a.at);
+  }
+
+  async photoGet(id: string): Promise<{ meta: SitePhoto; data: ArrayBuffer } | null> {
+    const [meta, data] = await Promise.all([this.ctx.storage.get<SitePhoto>(`pm:${id}`), this.ctx.storage.get<ArrayBuffer>(`pb:${id}`)]);
+    return meta && data ? { meta, data } : null;
+  }
+
+  async photoAdd(meta: SitePhoto, data: ArrayBuffer): Promise<void> {
+    await this.ctx.storage.put(`pb:${meta.id}`, data);
+    await this.ctx.storage.put(`pm:${meta.id}`, meta);
+  }
+
+  async photoUpdate(id: string, patch: Pick<SitePhoto, "date" | "caption">): Promise<SitePhoto | null> {
+    const meta = await this.ctx.storage.get<SitePhoto>(`pm:${id}`);
+    if (!meta) return null;
+    const next = { ...meta, ...patch };
+    await this.ctx.storage.put(`pm:${id}`, next);
+    return next;
+  }
+
+  async photoDelete(id: string): Promise<void> {
+    await this.ctx.storage.delete([`pm:${id}`, `pb:${id}`]);
   }
 
   /** Не больше limit запросов в минуту с одного ключа. */

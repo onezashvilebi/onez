@@ -12,6 +12,7 @@ import { USLUGI_AUDIENCE } from "~/content/pages/uslugi";
 import { MONOLITH } from "~/content/services";
 import { useScrollSpy } from "~/hooks/layout";
 import { useI18n } from "~/i18n/context";
+import { SiteNowCarousel } from "./SiteNowCarousel";
 import { cn } from "~/lib/cn";
 import { articlesBySlugs } from "~/logic/articles";
 import { relatedServices } from "~/logic/service";
@@ -93,30 +94,9 @@ export function CtaBand({ title, to, label, variant = "copper", id, children }: 
 
 /** «Сейчас строим»: датированные фото действующей площадки (данные — SITE_NOW). */
 export function SiteNowSection({ bg = "dark", id }: { bg?: SectionBg; id?: string }) {
-  const { t } = useI18n();
   return (
     <TitledSection bg={bg} id={id} eyebrow={SITE_NOW.eyebrow} title={SITE_NOW.title} intro={SITE_NOW.intro}>
-      <div className="reveal-stagger mt-[42px] grid gap-4 sm:mt-[62px] sm:grid-cols-2 tab:grid-cols-4">
-        {SITE_NOW.photos.map((p) => (
-          <figure key={p.file} className="m-0">
-            <img
-              src={`/assets/${p.file}.webp`}
-              srcSet={`/assets/${p.file}-820.webp 820w, /assets/${p.file}.webp 1200w`}
-              sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-              alt={t(p.alt)}
-              width={1200}
-              height={900}
-              loading="lazy"
-              decoding="async"
-              className="aspect-4/3 w-full border border-line object-cover"
-            />
-            <figcaption className="mt-3 flex items-baseline justify-between gap-3 text-[11px] tracking-[.06em] text-muted uppercase">
-              <T>{p.stage}</T>
-              <time dateTime={p.date}>{p.date.split("-").reverse().join(".")}</time>
-            </figcaption>
-          </figure>
-        ))}
-      </div>
+      <SiteNowCarousel />
     </TitledSection>
   );
 }
