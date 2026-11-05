@@ -23,13 +23,13 @@ describe("проверка полей заявки", () => {
   });
 
   it("необязательное поле не блокирует отправку", () => {
-    expect([...missingFields(fields, values({ type: "Дом", phone: "@ilogush" }))]).toEqual([]);
+    expect([...missingFields(fields, values({ type: "Дом", phone: "@onezconstruction" }))]).toEqual([]);
   });
 
   it("в сообщение попадают только заполненные поля", () => {
-    expect(leadRows(fields, values({ type: "Дом", phone: "@ilogush" }))).toEqual([
+    expect(leadRows(fields, values({ type: "Дом", phone: "@onezconstruction" }))).toEqual([
       { label: "Тип объекта", value: "Дом" },
-      { label: "Телефон", value: "@ilogush" },
+      { label: "Телефон", value: "@onezconstruction" },
     ]);
   });
 });
@@ -56,7 +56,7 @@ describe("сообщение менеджеру", () => {
   });
 
   it("кнопка ответа ведёт в Telegram по нику и в WhatsApp по номеру", () => {
-    expect(replyButton([{ label: "Телефон", value: "@asatianiluka" }])?.url).toBe("https://t.me/ilogush");
+    expect(replyButton([{ label: "Телефон", value: "@onezconstruction" }])?.url).toBe("https://t.me/@onezconstruction");
     expect(replyButton([{ label: "Телефон", value: "599 538 277" }])?.url).toBe("https://wa.me/995599538277");
     expect(replyButton([{ label: "Телефон", value: "+995 599 538 277" }])?.url).toBe("https://wa.me/995599538277");
     expect(replyButton([{ label: "Тип объекта", value: "Дом" }])).toBeNull();
