@@ -1,7 +1,9 @@
+import { useEffect, useState } from "react";
 import type { MetaFunction } from "react-router";
 import { AdminChats } from "~/components/admin/AdminChats";
 import { AdminLeads } from "~/components/admin/AdminLeads";
 import { AdminSiteNow } from "~/components/admin/AdminSiteNow";
+import { AdminTexts } from "~/components/admin/AdminTexts";
 import { Login, Shell } from "~/components/admin/AdminShell";
 import { useAdmin } from "~/hooks/useAdmin";
 
@@ -11,13 +13,23 @@ export const meta: MetaFunction = () => [{ title: "Админка — ONEZA" }, 
 
 export default function Admin() {
   const admin = useAdmin();
+  // «Тексты» остаются в памяти после первого открытия: переключение вкладки не должно терять несохранённые правки.
+  const [textsOpened, setTextsOpened] = useState(false);
+  useEffect(() => {
+    if (admin.page === "texts") setTextsOpened(true);
+  }, [admin.page]);
   if (!admin.mounted || admin.authed === null) return <div className="admin-shell min-h-svh" />;
   if (!admin.authed) return <Login password={admin.password} setPassword={admin.setPassword} error={admin.loginError} onSubmit={admin.login} />;
 
   return (
-    <Shell page={admin.page} setPage={admin.setPage} badges={{ chats: admin.unreadTotal, leads: admin.openLeads, photos: 0 }} title={admin.page === "chats" ? "Чат с посетителями" : admin.page === "photos" ? "Фото стройки" : "Заявки с сайта"} onLogout={admin.logout}>
+    <Shell page={admin.page} setPage={admin.setPage} badges={{ chats: admin.unreadTotal, leads: admin.openLeads, photos: 0, texts: 0 }} title={admin.page === "chats" ? "Чат с посетителями" : admin.page === "photos" ? "Фото стройки" : admin.page === "texts" ? "Тексты сайта" : "Заявки с сайта"} onLogout={admin.logout}>
       {admin.error && <p className="mb-4 text-sm text-error">{admin.error}</p>}
-      {admin.page === "photos" ? (
+      {textsOpened && (
+        <div hidden={admin.page !== "texts"}>
+          <AdminTexts />
+        </div>
+      )}
+      {admin.page === "texts" ? null : admin.page === "photos" ? (
         <AdminSiteNow />
       ) : admin.page === "chats" ? (
         <AdminChats chats={admin.chats} active={admin.active} activeId={admin.activeId} setActiveId={admin.setActiveId} messages={admin.messages} browserLang={admin.browserLang} reply={admin.reply} setReply={admin.setReply} sending={admin.sending} sendReply={admin.sendReply} scroller={admin.scroller} />

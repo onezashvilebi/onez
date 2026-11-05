@@ -20,6 +20,9 @@ const OUT = join(WEB, "app/i18n/pages.json");
 const read = (p) => JSON.parse(readFileSync(p, "utf8"));
 const ka = read(join(WEB, "app/i18n/ka.json"));
 const extra = read(join(WEB, "app/i18n/extra.json"));
+// Правки из админки (overrides.json): на странице может стоять уже не словарный текст.
+const overridesPath = join(WEB, "app/i18n/overrides.json");
+const kaOver = existsSync(overridesPath) ? (read(overridesPath).ka ?? {}) : {};
 const dict = { ...ka, ...extra.ka };
 
 /** Строковые литералы файла в любых кавычках: строка формы объявлена через \'…\'. */
@@ -76,7 +79,10 @@ for (const [slug, file] of pages(BUILD)) {
   // Ключ берётся и по переводу в разметке, и по самой русской строке: если текст
   // на странице новый и ещё не переведён, иначе карта его не увидит никогда и
   // строка останется русской на ka и en после каждой пересборки.
-  for (const [ru, tr] of Object.entries(dict)) if (tr && (html.includes(norm(tr)) || html.includes(norm(ru)))) keys.add(ru);
+  for (const [ru, tr] of Object.entries(dict)) {
+    const own = kaOver[ru];
+    if ((tr && (html.includes(norm(tr)) || html.includes(norm(ru)))) || (own && html.includes(norm(own)))) keys.add(ru);
+  }
   map[slug] = [...keys].sort();
   min = Math.min(min, keys.size);
   max = Math.max(max, keys.size);

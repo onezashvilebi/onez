@@ -8,7 +8,7 @@ describe("isValidContact", () => {
   });
 
   it("принимает ник мессенджера от четырёх знаков", () => {
-    expect(isValidContact("@ilogush")).toBe(true);
+    expect(isValidContact("@onezconstruction")).toBe(true);
     expect(isValidContact("@abc")).toBe(false);
   });
 
@@ -23,7 +23,7 @@ describe("extractContact", () => {
   });
 
   it("находит ник, когда номера нет", () => {
-    expect(extractContact("пишите мне в телеграм @ilogush")).toBe("@ilogush");
+    expect(extractContact("пишите мне в телеграм @onezconstruction")).toBe("@onezconstruction");
   });
 
   it("возвращает null, когда контакта нет", () => {
