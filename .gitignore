@@ -2,3 +2,5 @@ node_modules/
 .react-router/
 dist/
 build/
+.dev.vars
+.env
