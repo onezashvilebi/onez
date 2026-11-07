@@ -24,7 +24,9 @@
   "durable_objects": { "bindings": [{ "name": "CHAT", "class_name": "ChatStore" }] },
   "migrations": [{ "tag": "v1", "new_sqlite_classes": ["ChatStore"] }],
   "ai": { "binding": "AI" },
-  // Секреты (wrangler secret put): ADMIN_PASSWORD — вход в кабинет /admin;
+  // Секреты (wrangler secret put): GITHUB_TOKEN — правки текстов из админки (workers/texts.ts; репозиторий —
+  // GITHUB_REPO, по умолчанию onezashvilebi/onez; ветка — та, из которой собран сайт, либо GITHUB_BRANCH);
+  // ADMIN_PASSWORD — вход в кабинет /admin;
   // TELEGRAM_BOT_TOKEN; TELEGRAM_ADMIN_CHAT_ID — группа,
   // куда идут и заявки, и сводки чата. TELEGRAM_CHAT_GROUP_ID — прежнее имя того же
   // секрета, чат берёт его, только если ADMIN не задан.

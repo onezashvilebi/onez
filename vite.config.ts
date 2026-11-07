@@ -4,11 +4,16 @@ import { reactRouter } from "@react-router/dev/vite";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "vite";
 
+// Переменные сборки: Workers Builds сообщает ветку (WORKERS_CI_BRANCH), сборка тестового воркера задаёт CF_CONFIG=wrangler.test.jsonc.
+const buildEnv = (globalThis as { process?: { env?: Record<string, string | undefined> } }).process?.env ?? {};
+
 // Пререндер поднимает воркер локально. Удалённые биндинги (Workers AI) требуют
 // сессии к API Cloudflare — без токена и сети сборка падала, а CI и коллега без
 // доступа не могли ни собрать сайт, ни увидеть счётчик переводов (ONEZ-48).
 // Чат с ИИ работает на задеплоенном воркере; в сборке биндинг AI не нужен.
 export default defineConfig({
-  plugins: [cloudflare({ viteEnvironment: { name: "ssr" }, remoteBindings: false }), tailwindcss(), reactRouter()],
+  // Ветка, из которой собран сайт: админка пишет правки текстов в неё же (workers/texts.ts).
+  define: { __BUILD_BRANCH__: JSON.stringify(buildEnv.WORKERS_CI_BRANCH ?? "") },
+  plugins: [cloudflare({ viteEnvironment: { name: "ssr" }, remoteBindings: false, ...(buildEnv.CF_CONFIG ? { configPath: buildEnv.CF_CONFIG } : {}) }), tailwindcss(), reactRouter()],
   resolve: { alias: { "~": fileURLToPath(new URL("./app", import.meta.url)) } },
 });

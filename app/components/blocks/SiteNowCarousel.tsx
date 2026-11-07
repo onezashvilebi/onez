@@ -24,8 +24,8 @@ export function SiteNowCarousel() {
   useEffect(() => {
     let alive = true;
     fetch("/api/site-now")
-      .then((r) => (r.ok ? r.json() : null))
-      .then((d: { photos?: Remote[] } | null) => {
+      .then((r) => (r.ok ? (r.json() as Promise<{ photos?: Remote[] }>) : null))
+      .then((d) => {
         if (alive && d?.photos) setRemote(d.photos);
       })
       .catch(() => {});
