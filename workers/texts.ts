@@ -125,9 +125,12 @@ function toBase64(text: string): string {
 async function readFile(cfg: Cfg, ref: string): Promise<{ text: string | null; sha: string | null }> {
   const resp = await github(cfg, `contents/${encodePath(cfg.path)}?ref=${encodeURIComponent(ref)}`);
   if (resp.status === 404) {
-    // 404 бывает и у несуществующей ветки: отличаем, спросив про саму ветку.
-    const branch = await github(cfg, `branches/${encodeURIComponent(ref)}`);
-    if (branch.status === 404) throw new GitHubError("not_found", 502);
+    // 404 бывает и у несуществующей ветки: отличаем, спросив про саму ветку. У старого коммита
+    // (ref — хеш) файла могло ещё не быть: это не ошибка.
+    if (ref === cfg.branch) {
+      const branch = await github(cfg, `branches/${encodeURIComponent(ref)}`);
+      if (branch.status === 404) throw new GitHubError("not_found", 502);
+    }
     return { text: null, sha: null };
   }
   if (!resp.ok) throw explain(resp);
@@ -276,6 +279,86 @@ async function handleRollback(request: Request, env: TextsEnv): Promise<Response
   }
 }
 
+type Change = { lang: TextLang; key: string; before: string | null; after: string | null };
+const MAX_DETAIL = 400;
+const SHA = /^[0-9a-f]{7,40}$/;
+
+/** Что изменил коммит: файл правок после него против файла перед ним (по строкам и языкам). */
+async function diffCommit(cfg: Cfg, sha: string) {
+  const resp = await github(cfg, `commits/${sha}`);
+  if (!resp.ok) throw explain(resp);
+  const info = (await resp.json()) as { sha: string; parents?: { sha: string }[]; commit: { message: string; author?: { name?: string; date?: string } } };
+  const parent = info.parents?.[0]?.sha;
+  const [after, before] = await Promise.all([readFile(cfg, info.sha), parent ? readFile(cfg, parent) : Promise.resolve({ text: null, sha: null })]);
+  const to = current(after);
+  const from = current(before);
+  const changes: Change[] = [];
+  for (const lang of TEXT_LANGS) {
+    const keys = [...new Set([...Object.keys(from[lang]), ...Object.keys(to[lang])])].sort();
+    for (const key of keys) {
+      const was = from[lang][key] ?? null;
+      const now = to[lang][key] ?? null;
+      if (was !== now) changes.push({ lang, key, before: was, after: now });
+    }
+  }
+  return { meta: { sha: info.sha, date: info.commit.author?.date ?? "", author: info.commit.author?.name ?? "", message: info.commit.message.split("\n")[0]?.slice(0, 140) ?? "" }, changes };
+}
+
+async function handleCommit(request: Request, env: TextsEnv): Promise<Response> {
+  const cfg = config(env);
+  if (!cfg) return fail("not_configured", 503);
+  const sha = new URL(request.url).searchParams.get("sha") ?? "";
+  if (!SHA.test(sha)) return fail("bad_request", 400);
+  try {
+    const d = await diffCommit(cfg, sha);
+    return json({ ...d.meta, total: d.changes.length, changes: d.changes.slice(0, MAX_DETAIL) });
+  } catch (e) {
+    if (e instanceof GitHubError) return fail(e.code, e.status);
+    if (e instanceof Error && e.message === "overrides_invalid") return fail("overrides_invalid", 422);
+    return fail("network", 502);
+  }
+}
+
+/**
+ * Отмена одной публикации: её строки возвращаются к тому, что было до неё, остальные
+ * правки не трогаются. Строка, которую позже изменила другая публикация, остаётся как есть
+ * и попадает в «пропущено». Результат — новый коммит, поэтому отмену тоже можно отменить.
+ */
+async function handleUndo(request: Request, env: TextsEnv): Promise<Response> {
+  const cfg = config(env);
+  if (!cfg) return fail("not_configured", 503);
+  const body = await request.json<Record<string, unknown>>().catch(() => null);
+  const sha = body?.sha;
+  const baseSha = body?.baseSha ?? null;
+  if (typeof sha !== "string" || !SHA.test(sha) || (baseSha !== null && typeof baseSha !== "string")) return fail("bad_request", 400);
+  try {
+    const d = await diffCommit(cfg, sha);
+    if (!d.changes.length) return json({ ok: true, unchanged: true, reverted: 0, skipped: 0 });
+    const now = await readFile(cfg, cfg.branch);
+    if (now.sha !== baseSha) return fail("conflict", 409);
+    const cur = current(now);
+    const next: Overrides = { ru: { ...cur.ru }, ka: { ...cur.ka }, en: { ...cur.en } };
+    let reverted = 0;
+    let skipped = 0;
+    for (const c of d.changes) {
+      if ((cur[c.lang][c.key] ?? null) !== c.after) {
+        skipped++;
+        continue;
+      }
+      if (c.before === null) delete next[c.lang][c.key];
+      else next[c.lang][c.key] = c.before;
+      reverted++;
+    }
+    if (!reverted) return json({ ok: true, unchanged: true, reverted: 0, skipped });
+    const saved = await writeFile(cfg, serializeOverrides(next), now.sha, `Тексты: отмена правки ${sha.slice(0, 7)} (${reverted} строк)`);
+    return json({ ok: true, reverted, skipped, sha: saved.sha, commit: saved.commit });
+  } catch (e) {
+    if (e instanceof GitHubError) return fail(e.code, e.status);
+    if (e instanceof Error && e.message === "overrides_invalid") return fail("overrides_invalid", 422);
+    return fail("network", 502);
+  }
+}
+
 /** /api/admin/texts*: null — это не наш адрес. */
 export async function handleTextsAdmin(request: Request, env: TextsEnv, path: string): Promise<Response | null> {
   if (path !== "/texts" && !path.startsWith("/texts/")) return null;
@@ -283,6 +366,8 @@ export async function handleTextsAdmin(request: Request, env: TextsEnv, path: st
   const post = request.method === "POST";
   if (path === "/texts" && get) return handleList(env);
   if (path === "/texts/history" && get) return handleHistory(env);
+  if (path === "/texts/commit" && get) return handleCommit(request, env);
+  if (path === "/texts/undo" && post) return handleUndo(request, env);
   if (path === "/texts/publish" && post) return handlePublish(request, env);
   if (path === "/texts/rollback" && post) return handleRollback(request, env);
   return json({ error: "not_found" }, 404);

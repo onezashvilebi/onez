@@ -7,6 +7,13 @@ import { defineConfig } from "vite";
 // Переменные сборки: Workers Builds сообщает ветку (WORKERS_CI_BRANCH), сборка тестового воркера задаёт CF_CONFIG=wrangler.test.jsonc.
 const buildEnv = (globalThis as { process?: { env?: Record<string, string | undefined> } }).process?.env ?? {};
 
+// Защита от захвата боевых доменов: воркер с «test» в имени, собранный по боевому конфигу (без CF_CONFIG),
+// получил бы домены onez.ge из wrangler.jsonc. Такая сборка останавливается, деплоя не будет.
+const ciName = buildEnv.WRANGLER_CI_OVERRIDE_NAME ?? "";
+if (/test/i.test(ciName) && !buildEnv.CF_CONFIG) {
+  throw new Error(`Сборка остановлена: воркер «${ciName}» собирается по боевому конфигу и забрал бы домены onez.ge. Добавьте CF_CONFIG=wrangler.test.jsonc в команду сборки или удалите тестовый воркер.`);
+}
+
 // Пререндер поднимает воркер локально. Удалённые биндинги (Workers AI) требуют
 // сессии к API Cloudflare — без токена и сети сборка падала, а CI и коллега без
 // доступа не могли ни собрать сайт, ни увидеть счётчик переводов (ONEZ-48).

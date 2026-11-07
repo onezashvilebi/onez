@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { BUTTON, CARD, FIELD, GHOST, LABEL } from "~/components/admin/AdminShell";
+import { PagesHistory } from "~/components/admin/PagesHistory";
 import { useTextsStore, type FieldState, type Group } from "~/hooks/useTextsStore";
 import { translate } from "~/i18n/context";
 import deployedOverrides from "~/i18n/overrides.json";
@@ -78,6 +79,7 @@ export function AdminPages() {
   const [found, setFound] = useState<number | null>(null);
   const [blocks, setBlocks] = useState<Block[]>([]);
   const [pick, setPick] = useState<Picked | null>(null);
+  const [view, setView] = useState<"editor" | "history">("editor");
   const frame = useRef<HTMLIFrameElement>(null);
   const flags = useRef<Flag[]>([]);
   const cleanup = useRef<(() => void) | null>(null);
@@ -94,6 +96,13 @@ export function AdminPages() {
     for (const g of data?.groups ?? []) map.set(g.id === "__home" ? "" : g.id, g);
     return map;
   }, [data]);
+  /** На каких страницах встречается строка (для «Где на сайте» в истории). */
+  const places = useMemo(() => {
+    const map = new Map<number, string[]>();
+    for (const g of data?.groups ?? []) for (const i of g.ids) map.set(i, [...(map.get(i) ?? []), g.name]);
+    return map;
+  }, [data]);
+  const placesOf = useCallback((key: string) => places.get(keyIndex.get(key) ?? -1) ?? [], [places, keyIndex]);
   const pages = useMemo(() => {
     const q = filter.trim().toLowerCase();
     return PAGES.map((p) => ({ slug: p.slug, name: groupBySlug.get(p.slug)?.name ?? (p.slug ? `/${p.slug}` : "Главная"), count: groupBySlug.get(p.slug)?.ids.length ?? 0 })).filter((p) => !q || `${p.name} ${p.slug}`.toLowerCase().includes(q));
@@ -186,6 +195,9 @@ export function AdminPages() {
           {data.github.buildBranch ? ` · сайт собран из ветки ${data.github.buildBranch}` : ""}
         </span>
         <span className="flex-1" />
+        <button type="button" onClick={() => setView((v) => (v === "history" ? "editor" : "history"))} className={cn(GHOST, view === "history" && "border-teal text-teal")} aria-pressed={view === "history"}>
+          {view === "history" ? "К макету" : "История изменений"}
+        </button>
         <button type="button" disabled={!store.hasEdits || store.busy} onClick={() => store.setEdits({})} className={GHOST}>
           Отменить все
         </button>
@@ -210,6 +222,8 @@ export function AdminPages() {
         </ul>
       )}
 
+      <div hidden={view === "history"}>
+      <div className="flex flex-col gap-3">
       {RAW_SLUGS.has(slug) && (
         <p className="rounded-[2px] border border-line p-3 text-sm text-copper-light">
           Тексты этой страницы лежат в коде отдельно для каждого языка и в этом редакторе пока не правятся. Кликаются только общие элементы: шапка, подвал, форма.
@@ -297,7 +311,9 @@ export function AdminPages() {
           )}
         </div>
       </div>
-
+      </div>
+      </div>
+      {view === "history" && <PagesHistory repo={data.github.repo} sha={data.sha} placesOf={placesOf} onChanged={() => void store.load()} />}
     </div>
   );
 }
