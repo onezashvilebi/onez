@@ -34,6 +34,15 @@ type Matches = [{
   id: "lang-ru";
   module: typeof import("../locale.js");
 }, {
+  id: "ru:dom-pod-otdelku";
+  module: typeof import("../landing.js");
+}] | [{
+  id: "root";
+  module: typeof import("../../root.js");
+}, {
+  id: "lang-ru";
+  module: typeof import("../locale.js");
+}, {
   id: "ru:podryad-na-monolit";
   module: typeof import("../landing.js");
 }] | [{
@@ -70,6 +79,15 @@ type Matches = [{
   id: "lang-en";
   module: typeof import("../locale.js");
 }, {
+  id: "en:dom-pod-otdelku";
+  module: typeof import("../landing.js");
+}] | [{
+  id: "root";
+  module: typeof import("../../root.js");
+}, {
+  id: "lang-en";
+  module: typeof import("../locale.js");
+}, {
   id: "en:podryad-na-monolit";
   module: typeof import("../landing.js");
 }] | [{
@@ -98,6 +116,15 @@ type Matches = [{
   module: typeof import("../locale.js");
 }, {
   id: "ka:biznesu-sklad-i-ceh";
+  module: typeof import("../landing.js");
+}] | [{
+  id: "root";
+  module: typeof import("../../root.js");
+}, {
+  id: "lang-ka";
+  module: typeof import("../locale.js");
+}, {
+  id: "ka:dom-pod-otdelku";
   module: typeof import("../landing.js");
 }] | [{
   id: "root";

@@ -12,9 +12,7 @@ const warned = new Set<string>();
 
 /** Русская строка-пивот → строка на языке страницы (может содержать <br>, <em>, <b>). */
 export function translate({ lang, dict, raw }: I18nState, ru: string): string {
-  if (!ru) return ru;
-  // Русский — язык ключей: его словарь хранит только правки из админки (overrides.json).
-  if (lang === "ru") return dict[ru] ?? ru;
+  if (!ru || lang === "ru") return ru;
   const hit = dict[ru];
   if (hit === undefined && raw) return ru;
   if (hit === undefined && import.meta.env.DEV && !warned.has(ru)) {

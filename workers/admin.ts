@@ -5,9 +5,8 @@
 import { SESSION_TTL_S, issueToken, samePassword, summary, verifyToken } from "./admin-auth";
 import { type ChatEnv, type Lead, store } from "./chat";
 import { handleSiteNowAdmin } from "./site-now";
-import { handleTextsAdmin, type TextsEnv } from "./texts";
 
-export type AdminEnv = ChatEnv & TextsEnv & { ADMIN_PASSWORD?: string };
+export type AdminEnv = ChatEnv & { ADMIN_PASSWORD?: string };
 
 const COOKIE = "onez_admin";
 /** Попыток входа в минуту с одного адреса. */
@@ -47,9 +46,6 @@ export async function handleAdmin(request: Request, env: AdminEnv): Promise<Resp
 
   const siteNow = await handleSiteNowAdmin(request, env, path);
   if (siteNow) return siteNow;
-
-  const texts = await handleTextsAdmin(request, env, path);
-  if (texts) return texts;
 
   if (path === "/chats" && request.method === "GET") {
     const sessions = await store(env).list();

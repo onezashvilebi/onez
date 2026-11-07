@@ -35,6 +35,9 @@ type Pages = {
   "/ru/biznesu-sklad-i-ceh": {
     params: {};
   };
+  "/ru/dom-pod-otdelku": {
+    params: {};
+  };
   "/ru/podryad-na-monolit": {
     params: {};
   };
@@ -143,6 +146,9 @@ type Pages = {
   "/en/biznesu-sklad-i-ceh": {
     params: {};
   };
+  "/en/dom-pod-otdelku": {
+    params: {};
+  };
   "/en/podryad-na-monolit": {
     params: {};
   };
@@ -246,6 +252,9 @@ type Pages = {
     params: {};
   };
   "/biznesu-sklad-i-ceh": {
+    params: {};
+  };
+  "/dom-pod-otdelku": {
     params: {};
   };
   "/podryad-na-monolit": {
@@ -354,7 +363,7 @@ type Pages = {
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/sitemap.xml" | "/llms.txt" | "/admin" | "/ru" | "/ru/uslugi" | "/ru/investoru-v-tbilisi" | "/ru/biznesu-sklad-i-ceh" | "/ru/podryad-na-monolit" | "/ru/uchastok-na-sklone" | "/ru/zhilye-korpusa" | "/ru/proizvodstvo-i-sklady" | "/ru/chastnye-doma" | "/ru/podpornye-steny" | "/ru/fundamenty" | "/ru/proverka-uchastka" | "/ru/process" | "/ru/cena" | "/ru/obekty" | "/ru/obekt-saburtalo" | "/ru/obekt-rustavi" | "/ru/obekt-tskhneti" | "/ru/obekt-vake" | "/ru/obekt-gldani" | "/ru/obekt-lisi" | "/ru/obekt-digomi" | "/ru/obekt-marneuli" | "/ru/obekt-betania" | "/ru/o-kompanii" | "/ru/komanda" | "/ru/kontakty" | "/ru/stati" | "/ru/kategoriya-zemli" | "/ru/koefficienty-zastrojki" | "/ru/smeta-bez-syurprizov" | "/ru/stroitelstvo-dlya-nerezidenta" | "/ru/oplata-stroitelstva-iz-za-rubezha" | "/ru/monolitnyj-karkas" | "/ru/politika" | "/ru/build-in-georgia" | "/en" | "/en/uslugi" | "/en/investoru-v-tbilisi" | "/en/biznesu-sklad-i-ceh" | "/en/podryad-na-monolit" | "/en/uchastok-na-sklone" | "/en/zhilye-korpusa" | "/en/proizvodstvo-i-sklady" | "/en/chastnye-doma" | "/en/podpornye-steny" | "/en/fundamenty" | "/en/proverka-uchastka" | "/en/process" | "/en/cena" | "/en/obekty" | "/en/obekt-saburtalo" | "/en/obekt-rustavi" | "/en/obekt-tskhneti" | "/en/obekt-vake" | "/en/obekt-gldani" | "/en/obekt-lisi" | "/en/obekt-digomi" | "/en/obekt-marneuli" | "/en/obekt-betania" | "/en/o-kompanii" | "/en/komanda" | "/en/kontakty" | "/en/stati" | "/en/kategoriya-zemli" | "/en/koefficienty-zastrojki" | "/en/smeta-bez-syurprizov" | "/en/stroitelstvo-dlya-nerezidenta" | "/en/oplata-stroitelstva-iz-za-rubezha" | "/en/monolitnyj-karkas" | "/en/politika" | "/en/build-in-georgia" | "/uslugi" | "/investoru-v-tbilisi" | "/biznesu-sklad-i-ceh" | "/podryad-na-monolit" | "/uchastok-na-sklone" | "/zhilye-korpusa" | "/proizvodstvo-i-sklady" | "/chastnye-doma" | "/podpornye-steny" | "/fundamenty" | "/proverka-uchastka" | "/process" | "/cena" | "/obekty" | "/obekt-saburtalo" | "/obekt-rustavi" | "/obekt-tskhneti" | "/obekt-vake" | "/obekt-gldani" | "/obekt-lisi" | "/obekt-digomi" | "/obekt-marneuli" | "/obekt-betania" | "/o-kompanii" | "/komanda" | "/kontakty" | "/stati" | "/kategoriya-zemli" | "/koefficienty-zastrojki" | "/smeta-bez-syurprizov" | "/stroitelstvo-dlya-nerezidenta" | "/oplata-stroitelstva-iz-za-rubezha" | "/monolitnyj-karkas" | "/politika" | "/build-in-georgia" | "/*";
+    page: "/" | "/sitemap.xml" | "/llms.txt" | "/admin" | "/ru" | "/ru/uslugi" | "/ru/investoru-v-tbilisi" | "/ru/biznesu-sklad-i-ceh" | "/ru/dom-pod-otdelku" | "/ru/podryad-na-monolit" | "/ru/uchastok-na-sklone" | "/ru/zhilye-korpusa" | "/ru/proizvodstvo-i-sklady" | "/ru/chastnye-doma" | "/ru/podpornye-steny" | "/ru/fundamenty" | "/ru/proverka-uchastka" | "/ru/process" | "/ru/cena" | "/ru/obekty" | "/ru/obekt-saburtalo" | "/ru/obekt-rustavi" | "/ru/obekt-tskhneti" | "/ru/obekt-vake" | "/ru/obekt-gldani" | "/ru/obekt-lisi" | "/ru/obekt-digomi" | "/ru/obekt-marneuli" | "/ru/obekt-betania" | "/ru/o-kompanii" | "/ru/komanda" | "/ru/kontakty" | "/ru/stati" | "/ru/kategoriya-zemli" | "/ru/koefficienty-zastrojki" | "/ru/smeta-bez-syurprizov" | "/ru/stroitelstvo-dlya-nerezidenta" | "/ru/oplata-stroitelstva-iz-za-rubezha" | "/ru/monolitnyj-karkas" | "/ru/politika" | "/ru/build-in-georgia" | "/en" | "/en/uslugi" | "/en/investoru-v-tbilisi" | "/en/biznesu-sklad-i-ceh" | "/en/dom-pod-otdelku" | "/en/podryad-na-monolit" | "/en/uchastok-na-sklone" | "/en/zhilye-korpusa" | "/en/proizvodstvo-i-sklady" | "/en/chastnye-doma" | "/en/podpornye-steny" | "/en/fundamenty" | "/en/proverka-uchastka" | "/en/process" | "/en/cena" | "/en/obekty" | "/en/obekt-saburtalo" | "/en/obekt-rustavi" | "/en/obekt-tskhneti" | "/en/obekt-vake" | "/en/obekt-gldani" | "/en/obekt-lisi" | "/en/obekt-digomi" | "/en/obekt-marneuli" | "/en/obekt-betania" | "/en/o-kompanii" | "/en/komanda" | "/en/kontakty" | "/en/stati" | "/en/kategoriya-zemli" | "/en/koefficienty-zastrojki" | "/en/smeta-bez-syurprizov" | "/en/stroitelstvo-dlya-nerezidenta" | "/en/oplata-stroitelstva-iz-za-rubezha" | "/en/monolitnyj-karkas" | "/en/politika" | "/en/build-in-georgia" | "/uslugi" | "/investoru-v-tbilisi" | "/biznesu-sklad-i-ceh" | "/dom-pod-otdelku" | "/podryad-na-monolit" | "/uchastok-na-sklone" | "/zhilye-korpusa" | "/proizvodstvo-i-sklady" | "/chastnye-doma" | "/podpornye-steny" | "/fundamenty" | "/proverka-uchastka" | "/process" | "/cena" | "/obekty" | "/obekt-saburtalo" | "/obekt-rustavi" | "/obekt-tskhneti" | "/obekt-vake" | "/obekt-gldani" | "/obekt-lisi" | "/obekt-digomi" | "/obekt-marneuli" | "/obekt-betania" | "/o-kompanii" | "/komanda" | "/kontakty" | "/stati" | "/kategoriya-zemli" | "/koefficienty-zastrojki" | "/smeta-bez-syurprizov" | "/stroitelstvo-dlya-nerezidenta" | "/oplata-stroitelstva-iz-za-rubezha" | "/monolitnyj-karkas" | "/politika" | "/build-in-georgia" | "/*";
   };
   "routes/sitemap.ts": {
     id: "routes/sitemap";
@@ -370,13 +379,13 @@ type RouteFiles = {
   };
   "routes/locale.tsx": {
     id: "lang-ru";
-    page: "/ru" | "/ru/uslugi" | "/ru/investoru-v-tbilisi" | "/ru/biznesu-sklad-i-ceh" | "/ru/podryad-na-monolit" | "/ru/uchastok-na-sklone" | "/ru/zhilye-korpusa" | "/ru/proizvodstvo-i-sklady" | "/ru/chastnye-doma" | "/ru/podpornye-steny" | "/ru/fundamenty" | "/ru/proverka-uchastka" | "/ru/process" | "/ru/cena" | "/ru/obekty" | "/ru/obekt-saburtalo" | "/ru/obekt-rustavi" | "/ru/obekt-tskhneti" | "/ru/obekt-vake" | "/ru/obekt-gldani" | "/ru/obekt-lisi" | "/ru/obekt-digomi" | "/ru/obekt-marneuli" | "/ru/obekt-betania" | "/ru/o-kompanii" | "/ru/komanda" | "/ru/kontakty" | "/ru/stati" | "/ru/kategoriya-zemli" | "/ru/koefficienty-zastrojki" | "/ru/smeta-bez-syurprizov" | "/ru/stroitelstvo-dlya-nerezidenta" | "/ru/oplata-stroitelstva-iz-za-rubezha" | "/ru/monolitnyj-karkas" | "/ru/politika" | "/ru/build-in-georgia";
+    page: "/ru" | "/ru/uslugi" | "/ru/investoru-v-tbilisi" | "/ru/biznesu-sklad-i-ceh" | "/ru/dom-pod-otdelku" | "/ru/podryad-na-monolit" | "/ru/uchastok-na-sklone" | "/ru/zhilye-korpusa" | "/ru/proizvodstvo-i-sklady" | "/ru/chastnye-doma" | "/ru/podpornye-steny" | "/ru/fundamenty" | "/ru/proverka-uchastka" | "/ru/process" | "/ru/cena" | "/ru/obekty" | "/ru/obekt-saburtalo" | "/ru/obekt-rustavi" | "/ru/obekt-tskhneti" | "/ru/obekt-vake" | "/ru/obekt-gldani" | "/ru/obekt-lisi" | "/ru/obekt-digomi" | "/ru/obekt-marneuli" | "/ru/obekt-betania" | "/ru/o-kompanii" | "/ru/komanda" | "/ru/kontakty" | "/ru/stati" | "/ru/kategoriya-zemli" | "/ru/koefficienty-zastrojki" | "/ru/smeta-bez-syurprizov" | "/ru/stroitelstvo-dlya-nerezidenta" | "/ru/oplata-stroitelstva-iz-za-rubezha" | "/ru/monolitnyj-karkas" | "/ru/politika" | "/ru/build-in-georgia";
   } | {
     id: "lang-en";
-    page: "/en" | "/en/uslugi" | "/en/investoru-v-tbilisi" | "/en/biznesu-sklad-i-ceh" | "/en/podryad-na-monolit" | "/en/uchastok-na-sklone" | "/en/zhilye-korpusa" | "/en/proizvodstvo-i-sklady" | "/en/chastnye-doma" | "/en/podpornye-steny" | "/en/fundamenty" | "/en/proverka-uchastka" | "/en/process" | "/en/cena" | "/en/obekty" | "/en/obekt-saburtalo" | "/en/obekt-rustavi" | "/en/obekt-tskhneti" | "/en/obekt-vake" | "/en/obekt-gldani" | "/en/obekt-lisi" | "/en/obekt-digomi" | "/en/obekt-marneuli" | "/en/obekt-betania" | "/en/o-kompanii" | "/en/komanda" | "/en/kontakty" | "/en/stati" | "/en/kategoriya-zemli" | "/en/koefficienty-zastrojki" | "/en/smeta-bez-syurprizov" | "/en/stroitelstvo-dlya-nerezidenta" | "/en/oplata-stroitelstva-iz-za-rubezha" | "/en/monolitnyj-karkas" | "/en/politika" | "/en/build-in-georgia";
+    page: "/en" | "/en/uslugi" | "/en/investoru-v-tbilisi" | "/en/biznesu-sklad-i-ceh" | "/en/dom-pod-otdelku" | "/en/podryad-na-monolit" | "/en/uchastok-na-sklone" | "/en/zhilye-korpusa" | "/en/proizvodstvo-i-sklady" | "/en/chastnye-doma" | "/en/podpornye-steny" | "/en/fundamenty" | "/en/proverka-uchastka" | "/en/process" | "/en/cena" | "/en/obekty" | "/en/obekt-saburtalo" | "/en/obekt-rustavi" | "/en/obekt-tskhneti" | "/en/obekt-vake" | "/en/obekt-gldani" | "/en/obekt-lisi" | "/en/obekt-digomi" | "/en/obekt-marneuli" | "/en/obekt-betania" | "/en/o-kompanii" | "/en/komanda" | "/en/kontakty" | "/en/stati" | "/en/kategoriya-zemli" | "/en/koefficienty-zastrojki" | "/en/smeta-bez-syurprizov" | "/en/stroitelstvo-dlya-nerezidenta" | "/en/oplata-stroitelstva-iz-za-rubezha" | "/en/monolitnyj-karkas" | "/en/politika" | "/en/build-in-georgia";
   } | {
     id: "lang-ka";
-    page: "/" | "/uslugi" | "/investoru-v-tbilisi" | "/biznesu-sklad-i-ceh" | "/podryad-na-monolit" | "/uchastok-na-sklone" | "/zhilye-korpusa" | "/proizvodstvo-i-sklady" | "/chastnye-doma" | "/podpornye-steny" | "/fundamenty" | "/proverka-uchastka" | "/process" | "/cena" | "/obekty" | "/obekt-saburtalo" | "/obekt-rustavi" | "/obekt-tskhneti" | "/obekt-vake" | "/obekt-gldani" | "/obekt-lisi" | "/obekt-digomi" | "/obekt-marneuli" | "/obekt-betania" | "/o-kompanii" | "/komanda" | "/kontakty" | "/stati" | "/kategoriya-zemli" | "/koefficienty-zastrojki" | "/smeta-bez-syurprizov" | "/stroitelstvo-dlya-nerezidenta" | "/oplata-stroitelstva-iz-za-rubezha" | "/monolitnyj-karkas" | "/politika" | "/build-in-georgia" | "/*";
+    page: "/" | "/uslugi" | "/investoru-v-tbilisi" | "/biznesu-sklad-i-ceh" | "/dom-pod-otdelku" | "/podryad-na-monolit" | "/uchastok-na-sklone" | "/zhilye-korpusa" | "/proizvodstvo-i-sklady" | "/chastnye-doma" | "/podpornye-steny" | "/fundamenty" | "/proverka-uchastka" | "/process" | "/cena" | "/obekty" | "/obekt-saburtalo" | "/obekt-rustavi" | "/obekt-tskhneti" | "/obekt-vake" | "/obekt-gldani" | "/obekt-lisi" | "/obekt-digomi" | "/obekt-marneuli" | "/obekt-betania" | "/o-kompanii" | "/komanda" | "/kontakty" | "/stati" | "/kategoriya-zemli" | "/koefficienty-zastrojki" | "/smeta-bez-syurprizov" | "/stroitelstvo-dlya-nerezidenta" | "/oplata-stroitelstva-iz-za-rubezha" | "/monolitnyj-karkas" | "/politika" | "/build-in-georgia" | "/*";
   };
   "routes/home.tsx": {
     id: "ru:home";
@@ -405,6 +414,9 @@ type RouteFiles = {
     id: "ru:biznesu-sklad-i-ceh";
     page: "/ru/biznesu-sklad-i-ceh";
   } | {
+    id: "ru:dom-pod-otdelku";
+    page: "/ru/dom-pod-otdelku";
+  } | {
     id: "ru:podryad-na-monolit";
     page: "/ru/podryad-na-monolit";
   } | {
@@ -417,6 +429,9 @@ type RouteFiles = {
     id: "en:biznesu-sklad-i-ceh";
     page: "/en/biznesu-sklad-i-ceh";
   } | {
+    id: "en:dom-pod-otdelku";
+    page: "/en/dom-pod-otdelku";
+  } | {
     id: "en:podryad-na-monolit";
     page: "/en/podryad-na-monolit";
   } | {
@@ -428,6 +443,9 @@ type RouteFiles = {
   } | {
     id: "ka:biznesu-sklad-i-ceh";
     page: "/biznesu-sklad-i-ceh";
+  } | {
+    id: "ka:dom-pod-otdelku";
+    page: "/dom-pod-otdelku";
   } | {
     id: "ka:podryad-na-monolit";
     page: "/podryad-na-monolit";
@@ -734,6 +752,7 @@ type RouteModules = {
   "ru:uslugi": typeof import("./app/routes/uslugi.tsx");
   "ru:investoru-v-tbilisi": typeof import("./app/routes/landing.tsx");
   "ru:biznesu-sklad-i-ceh": typeof import("./app/routes/landing.tsx");
+  "ru:dom-pod-otdelku": typeof import("./app/routes/landing.tsx");
   "ru:podryad-na-monolit": typeof import("./app/routes/landing.tsx");
   "ru:uchastok-na-sklone": typeof import("./app/routes/landing.tsx");
   "ru:zhilye-korpusa": typeof import("./app/routes/service.tsx");
@@ -771,6 +790,7 @@ type RouteModules = {
   "en:uslugi": typeof import("./app/routes/uslugi.tsx");
   "en:investoru-v-tbilisi": typeof import("./app/routes/landing.tsx");
   "en:biznesu-sklad-i-ceh": typeof import("./app/routes/landing.tsx");
+  "en:dom-pod-otdelku": typeof import("./app/routes/landing.tsx");
   "en:podryad-na-monolit": typeof import("./app/routes/landing.tsx");
   "en:uchastok-na-sklone": typeof import("./app/routes/landing.tsx");
   "en:zhilye-korpusa": typeof import("./app/routes/service.tsx");
@@ -808,6 +828,7 @@ type RouteModules = {
   "ka:uslugi": typeof import("./app/routes/uslugi.tsx");
   "ka:investoru-v-tbilisi": typeof import("./app/routes/landing.tsx");
   "ka:biznesu-sklad-i-ceh": typeof import("./app/routes/landing.tsx");
+  "ka:dom-pod-otdelku": typeof import("./app/routes/landing.tsx");
   "ka:podryad-na-monolit": typeof import("./app/routes/landing.tsx");
   "ka:uchastok-na-sklone": typeof import("./app/routes/landing.tsx");
   "ka:zhilye-korpusa": typeof import("./app/routes/service.tsx");

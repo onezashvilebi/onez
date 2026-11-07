@@ -6,7 +6,6 @@ import type { Dict } from "./context";
 import en from "./en.json";
 import extra from "./extra.json";
 import ka from "./ka.json";
-import overrides from "./overrides.json";
 import pages from "./pages.json";
 
 /**
@@ -17,10 +16,8 @@ import pages from "./pages.json";
  * вес, чем непереведённая строка.
  */
 export function dictFor(lang: Lang, slug?: string): Dict {
-  // Правки из админки (overrides.json) ложатся поверх словарей и переживают `npm run i18n`.
-  // Русский — язык ключей: его словарь состоит только из правок.
-  const mine: Dict = (overrides as Record<string, Dict | undefined>)[lang] ?? {};
-  const full: Dict = lang === "ru" ? { ...mine } : { ...(lang === "ka" ? ka : en), ...extra[lang], ...mine };
+  if (lang === "ru") return {};
+  const full: Dict = { ...(lang === "ka" ? ka : en), ...extra[lang] };
   // Без slug (llms.txt собирает строки всех страниц сразу) — словарь целиком:
   // у главной slug пустой, поэтому признак «сужать» — сам факт аргумента.
   if (slug === undefined) return full;
